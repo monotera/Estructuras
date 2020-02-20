@@ -94,20 +94,52 @@ int main(int argc, char *argv[])
             else
                 cout << "El numero de comandos es invalido" << endl;
         }
+
         else if (strcmp(comando, "salir") == 0)
         {
             exit(1);
         }
-        else
-            cout << "comando invalido" << endl;
 
         /*-----------------------------------------------------------------*/
         /*------------------------Andres Torres----------------------------*/
-        //CODE
+        else if (strcmp(comando, "codificar") == 0)
+        {
+            archivo = new char[strlen(palabra[2])];
+            archivo = palabra[2];
+            if ((strstr(archivo, ".fa") != nullptr))
+                cout << "---Codificar (Archivo valido)---" << endl;
+            else
+                cout << "Archivo invalido" << endl;
+        }
+        else if (strcmp(comando, "decodificar") == 0)
+        {
+            archivo = new char[strlen(palabra[2])];
+            archivo = palabra[2];
+            if ((strstr(archivo, ".fa") != nullptr))
+                cout << "---Decodificar (Archivo valido)---" << endl;
+            else
+                cout << "Archivo invalido" << endl;
+        }
+        else if (strcmp(comando, "ruta_mas_corta") == 0)
+        {
+            char *des = palabra[2];
+            if (atoi(palabra[3]) == 0 || atoi(palabra[4]) == 0 || atoi(palabra[5]) == 0 || atoi(palabra[6]) == 0)
+                cout << "Una de las coordenadas no es valida, asegurese que sean solo numeros enteros\n";
+            cout << "La secuencia dada no existe\n";
+        }
+        else if (strcmp(comando, "base_remota") == 0)
+        {
+            char *des = palabra[2];
+            if (atoi(palabra[3]) == 0 || atoi(palabra[4]) == 0)
+                cout << "Una de las coordenadas no es valida, asegurese que sean solo numeros enteros\n";
+            cout << "La secuencia dada no existe\n";
+        }
         /*-----------------------------------------------------------------*/
         /*------------------------Richard Fonseca--------------------------*/
         //CODE
         /*-----------------------------------------------------------------*/
+        else
+            cout << "comando invalido" << endl;
         cout << "\n$ ";
         for (int i = 0; i < argc; i++)
         {
