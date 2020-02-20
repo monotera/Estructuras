@@ -123,16 +123,26 @@ int main(int argc, char *argv[])
         else if (strcmp(comando, "ruta_mas_corta") == 0)
         {
             char *des = palabra[2];
-            if (atoi(palabra[3]) == 0 || atoi(palabra[4]) == 0 || atoi(palabra[5]) == 0 || atoi(palabra[6]) == 0)
-                cout << "Una de las coordenadas no es valida, asegurese que sean solo numeros enteros\n";
-            cout << "La secuencia dada no existe\n";
+            if(argc == 7){
+                if (atoi(palabra[3]) == 0 || atoi(palabra[4]) == 0 || atoi(palabra[5]) == 0 || atoi(palabra[6]) == 0)
+                    cout << "Una de las coordenadas no es valida, asegurese que sean solo numeros enteros\n";
+                cout << "La secuencia dada no existe\n";
+                cout << "---Ruta mas corta---\n";
+            }
+            else
+                cout << "El numero de comandos es invalido" << endl;
         }
         else if (strcmp(comando, "base_remota") == 0)
         {
-            char *des = palabra[2];
-            if (atoi(palabra[3]) == 0 || atoi(palabra[4]) == 0)
-                cout << "Una de las coordenadas no es valida, asegurese que sean solo numeros enteros\n";
-            cout << "La secuencia dada no existe\n";
+            if(argc == 5){
+                char *des = palabra[2];
+                if (atoi(palabra[3]) == 0 || atoi(palabra[4]) == 0)
+                    cout << "Una de las coordenadas no es valida, asegurese que sean solo numeros enteros\n";
+                cout << "---Base remota---";
+                cout << "La secuencia dada no existe\n";
+            }
+            else
+                cout << "El numero de comandos es invalido" << endl;
         }
         /*-----------------------------------------------------------------*/
         /*------------------------Richard Fonseca--------------------------*/
