@@ -35,13 +35,13 @@ using namespace std;
         char *des = argv[2];
         if(atoi(argv[3])==0||atoi(argv[4])==0||atoi(argv[5])==0||atoi(argv[6])==0)
             cout << "Una de las coordenadas no es valida, asegurese que sean solo numeros enteros\n";
-        cout << "Busca la descirpcion dentro del archivo e imprime la ruta y peso mas corto\n";
+        cout << "La secuencia dada no existe\n";
     }
     else if(strcmp(comando,"base_remota")==0){
         char *des = argv[2];
         if(atoi(argv[3])==0||atoi(argv[4])==0)
             cout << "Una de las coordenadas no es valida, asegurese que sean solo numeros enteros\n";
-        cout << "baba\n";
+        cout << "La secuencia dada no existe\n";        
     }
     /*-----------------------------------------------------------------*/
     /*------------------------Richard Fonseca--------------------------*/
