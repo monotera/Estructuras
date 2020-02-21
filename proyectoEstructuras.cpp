@@ -9,15 +9,11 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    /*-------------------------VARIABLES------------------------------*/
-
     char *comando = new char[2];
     char *archivo;
     char *secuencia, *descriSecuencia, sec[200];
     char palabra[20][50];
 
-    /*-----------------------------------------------------------------*/
-    /*------------------------Nelson Mosquera--------------------------*/
     if (argc > 1)
     {
         comando = new char[strlen(argv[1])];
@@ -100,9 +96,6 @@ int main(int argc, char *argv[])
         {
             exit(1);
         }
-
-        /*-----------------------------------------------------------------*/
-        /*------------------------Andres Torres----------------------------*/
         else if (strcmp(comando, "codificar") == 0)
         {
             archivo = new char[strlen(palabra[2])];
@@ -145,9 +138,6 @@ int main(int argc, char *argv[])
             else
                 cout << "El numero de comandos es invalido" << endl;
         }
-        /*-----------------------------------------------------------------*/
-        /*------------------------Richard Fonseca--------------------------*/
-        //los ayudas
         else if(strcmp(comando, "ayuda") == 0)
         {
             cout << "AYUDA \n";
@@ -223,7 +213,6 @@ int main(int argc, char *argv[])
             cout << "AYUDA_BASE_REMOTA \n";
             cout<<"la manera correcta de llamar al comando base remota es: "<<"base_remota";
         }
-        /*-----------------------------------------------------------------*/
         else
             cout << "comando invalido" << endl;
         cout << "\n$ ";
