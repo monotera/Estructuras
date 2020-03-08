@@ -20,7 +20,17 @@ void secuencia::agregarLinea(string lineaNueva){
     linea.push_back(lineaNueva);
 }
 int secuencia::esSubSecuencia(string sub){
-    return -1;
+    int cant = 0;
+    list<string>::iterator it = linea.begin();
+    size_t p;
+    for(;it != linea.end();it++){
+        p = (*it).find(sub);
+        while(p!=string::npos){
+            cant++;
+            p = (*it).find(sub, p+sub.size());
+        }
+    }
+    return cant;
 }
 int secuencia::enmascarar(string sub){
     return -1;

@@ -19,7 +19,7 @@ public:
     int listar_secuencias();
     int guardar(string nombre);
     string getNombre();
-
+    int esSubSecuencia(string sub);
 };
 
 
