@@ -87,6 +87,12 @@ int main(int argc, char *argv[])
                 secuencia = new char[strlen(palabra[2])];
                 strcpy(secuencia, palabra[2]);
                 cout << "---ES_SUBSECUENCIA---" << endl;
+                if(sys.getArchivo().getSecuencias().empty())
+                    cout << "No hay secuencias cargas en memoria.\n";
+                else if(sys.esSubSecuencia(secuencia)==0)
+                    cout << "La secuencia dada no existe.\n";
+                else
+                    cout << "La secuencia dada se repite " << sys.esSubSecuencia(secuencia) << " veces.\n";                
             }
             else
                 cout << "El numero de comandos es invalido" << endl;

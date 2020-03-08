@@ -64,3 +64,7 @@ int sistema::guardar(string nombre){
 string sistema::getNombre(){
     return  arch.getNombreArchivo();
 }
+
+int sistema::esSubSecuencia(string sub){
+    return arch.esSubSecuencia(sub);
+}

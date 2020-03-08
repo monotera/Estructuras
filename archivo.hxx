@@ -55,4 +55,12 @@ void archivo::imprimirSec(secuencia sec, int sec_incompleta){
     else if (sec_incompleta == -1)
         cout << "Secuencia " << sec.getDescripcione() << " contiene al menos " << sec.getCantiBase() <<" bases"<<endl;
 }
+
+int archivo::esSubSecuencia(string sub){
+    int resp = 0;
+    list<secuencia>::iterator it = secuencias.begin();
+    for(;it!=secuencias.end();it++)
+        resp+=(*it).esSubSecuencia(sub);
+    return resp;
+}
 /*histograma(Pdescripcion), Obtiene el histograma de la secuencia con la descripcion dada, en caso de que exista*/
