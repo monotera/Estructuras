@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string.h>
+#include <string>
 #include "sistema.h"
 #include "archivo.h"
 #include "secuencia.h"
@@ -16,7 +17,7 @@ int main(int argc, char *argv[])
     char *archivo;
     char *secuencia, *descriSecuencia, sec[200];
     char palabra[20][50];
-
+    sistema sys;
     if (argc > 1)
     {
         comando = new char[strlen(argv[1])];
@@ -38,6 +39,15 @@ int main(int argc, char *argv[])
                 archivo = new char[strlen(palabra[2])];
                 strcpy(archivo, palabra[2]);
                 cout << "---CARGAR---" << endl;
+                int cantiSec = sys.cargarArchivo(archivo);
+                if(cantiSec == -1)
+                    cout << "El archivo no se pudo abrir" << endl;
+                else if(cantiSec == 0)
+                    cout << "El archivo " << sys.getNombre()<<" esta vacio" << endl;
+                else if(cantiSec == 1)
+                    cout << "1 secuencia cargada correctamente desde " << sys.getNombre() << endl;
+                else
+                    cout << cantiSec <<" secuencias cargadas correctamente desde " << sys.getNombre() << endl;
             }
             else
                 cout << "El numero de comandos es invalido" << endl;
@@ -45,10 +55,19 @@ int main(int argc, char *argv[])
         else if (strcmp(comando, "conteo") == 0)
         {
             cout << "---CONTEO---" << endl;
+            int cantiSec = sys.conteo();
+            if(cantiSec == 0)
+                cout << "No hay secuencias cargadas en memoria" << endl;
+            else if(cantiSec == 1)
+                cout << "1 secuencia cargada en memoria "  << endl;
+            else
+                cout << cantiSec <<" secuencias cargadas en memoria "<< endl;
         }
         else if (strcmp(comando, "listar_secuencias") == 0)
         {
             cout << "---LISTAR SECUENCIA---" << endl;
+            if(sys.listar_secuencias() == -1)
+                cout << "No hay secuencias cargadas en memoria" <<endl;
         }
         else if (strcmp(comando, "histograma") == 0)
         {

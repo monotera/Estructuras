@@ -15,8 +15,11 @@ private:
 public:
     archivo getArchivo();
     int cargarArchivo(string nombre);
+    int conteo();
+    int listar_secuencias();
     int guardar(string nombre);
-      
+    string getNombre();
+
 };
 
 

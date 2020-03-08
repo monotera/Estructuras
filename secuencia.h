@@ -13,15 +13,20 @@ class secuencia
 protected:
     list <string> linea;
     int ancho;
+    string descripcion;
+    long cantiBase;
 public:
-    int secuencias();
     int getAncho();
     void setAncho(int ancho);
     list <string> getLineas();
-    void setLineas(list <string> listaNueva);
-    int agregarLinea(string lineaNueva);
+    string getDescripcione();
+	void setDescripcion(string nuevaDesc);
+    void agregarLinea(string lineaNueva);
     int esSubSecuencia(string sub);
     int enmascarar(string sub);
+    int getCantiBase();
+    int setCantiBase();
+    void borrarLineas();
 };
 
 
