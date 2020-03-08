@@ -6,7 +6,7 @@
 using namespace std;
 
 int secuencia::secuencias(){
-
+    return -1;
 }
 int secuencia::getAncho(){
     return this->ancho;
@@ -15,17 +15,17 @@ void secuencia::setAncho(int ancho){
     this->ancho = ancho;
 }
 list <string> secuencia::getLineas(){
-    return this->secuencias;
+    return this->linea;
 }
 void secuencia::setLineas(list <string> listaNueva){
     
 }
 int secuencia::agregarLinea(string lineaNueva){
-
+    return -1;
 }
 int secuencia::esSubSecuencia(string sub){
-
+    return -1;
 }
 int secuencia::enmascarar(string sub){
-
+    return -1;
 }

@@ -7,7 +7,7 @@
 using namespace std;
 
 int archivo::archivos(){
-
+    return -1;
 }
 string archivo::getNombreArchivo(){
     return this->nombre;
@@ -28,9 +28,9 @@ void archivo::setDescripciones(list <string> nuevaDesc){
    
 }
 int archivo::listarSecuencias(){
-
+    return -1;
 }
 int archivo::conteo(){
-
+    return -1;
 }
 /*histograma(Pdescripcion), Obtiene el histograma de la secuencia con la descripcion dada, en caso de que exista*/
