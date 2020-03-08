@@ -2,6 +2,9 @@
 
 #include <iostream>
 #include <string.h>
+#include "sistema.h"
+#include "archivo.h"
+#include "secuencia.h"
 
 int countWords(char *str, char palabra[][50]);
 
