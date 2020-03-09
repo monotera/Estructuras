@@ -55,6 +55,13 @@ void archivo::imprimirSec(secuencia sec, int sec_incompleta){
     else if (sec_incompleta == -1)
         cout << "Secuencia " << sec.getDescripcione() << " contiene al menos " << sec.getCantiBase() <<" bases"<<endl;
 }
+int archivo::enmascarar(string sub){
+    int resp = 0;
+    list<secuencia>::iterator it = secuencias.begin();
+    for(;it!=secuencias.end();it++)
+        resp+=(*it).enmascarar(sub);
+    return resp;
+}
 
 int archivo::esSubSecuencia(string sub){
     int resp = 0;

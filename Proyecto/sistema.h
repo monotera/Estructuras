@@ -17,6 +17,7 @@ public:
     int cargarArchivo(string nombre);
     int conteo();
     int listar_secuencias();
+    int enmascarar(string sub);
     int guardar(string nombre);
     string getNombre();
     int esSubSecuencia(string sub);
