@@ -74,8 +74,14 @@ int main(int argc, char *argv[])
             if (argc == 3)
             {
                 descriSecuencia = new char[strlen(palabra[2])];
-                strcpy(descriSecuencia, palabra[2]);
+                strcpy(descriSecuencia, ">");
+                strcat(descriSecuencia, palabra[2]);
                 cout << "---HISTOGRAMA---" << endl;
+                string resp = sys.histograma(descriSecuencia);
+                if(resp=="")
+                    cout << "Secuencia invalida.\n";
+                else
+                    cout << resp;               
             }
             else
                 cout << "El numero de comandos es invalido" << endl;
@@ -87,12 +93,13 @@ int main(int argc, char *argv[])
                 secuencia = new char[strlen(palabra[2])];
                 strcpy(secuencia, palabra[2]);
                 cout << "---ES_SUBSECUENCIA---" << endl;
+                int sub = sys.esSubSecuencia(secuencia);
                 if(sys.getArchivo().getSecuencias().empty())
                     cout << "No hay secuencias cargas en memoria.\n";
-                else if(sys.esSubSecuencia(secuencia)==0)
+                else if(sub==0)
                     cout << "La secuencia dada no existe.\n";
                 else
-                    cout << "La secuencia dada se repite " << sys.esSubSecuencia(secuencia) << " veces.\n";                
+                    cout << "La secuencia dada se repite " << sub << " veces.\n";                
             }
             else
                 cout << "El numero de comandos es invalido" << endl;

@@ -68,3 +68,7 @@ string sistema::getNombre(){
 int sistema::esSubSecuencia(string sub){
     return arch.esSubSecuencia(sub);
 }
+
+string sistema::histograma(string desc){
+    return arch.histograma(desc);
+}

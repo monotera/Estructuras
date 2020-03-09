@@ -20,6 +20,7 @@ public:
     int guardar(string nombre);
     string getNombre();
     int esSubSecuencia(string sub);
+    string histograma(string desc);
 };
 
 

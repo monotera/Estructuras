@@ -20,6 +20,7 @@ public:
     void setAncho(int ancho);
     list <string> getLineas();
     string getDescripcione();
+    string histograma();
 	void setDescripcion(string nuevaDesc);
     void agregarLinea(string lineaNueva);
     int esSubSecuencia(string sub);

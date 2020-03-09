@@ -65,3 +65,33 @@ int secuencia::getCantiBase(){
 void secuencia::borrarLineas(){
     linea.clear();
 }
+
+string secuencia::histograma(){
+    string resp = "";
+    int a,c,g,t,u,r,y,k,m,s,w,b,d,h,v,n,x,inc;
+    a = esSubSecuencia("A");  
+    c = esSubSecuencia("C");
+    g = esSubSecuencia("G");
+    t = esSubSecuencia("T");
+    u = esSubSecuencia("U");
+    r = esSubSecuencia("R");
+    y = esSubSecuencia("Y");
+    k = esSubSecuencia("K");
+    m = esSubSecuencia("M");
+    s = esSubSecuencia("S");
+    w = esSubSecuencia("W");
+    b = esSubSecuencia("B");  
+    d = esSubSecuencia("D"); 
+    h = esSubSecuencia("H"); 
+    v = esSubSecuencia("V"); 
+    n = esSubSecuencia("N"); 
+    x = esSubSecuencia("X");
+    inc = esSubSecuencia("-");
+    resp+="A: "+to_string(a)+"\n"+"C: "+to_string(c)+"\n"+"G: "+to_string(g)+"\n"+
+    "T: "+to_string(t)+"\n"+"U: "+to_string(u)+"\n"+"R: "+to_string(r)+"\n"+
+    "Y: "+to_string(y)+"\n"+"K: "+to_string(k)+"\n"+"M: "+to_string(k)+"\n"+
+    "S: "+to_string(s)+"\n"+"W: "+to_string(w)+"\n"+"B: "+to_string(b)+"\n"+
+    "D: "+to_string(d)+"\n"+"H: "+to_string(h)+"\n"+"V: "+to_string(v)+"\n"+
+    "N: "+to_string(n)+"\n"+"X: "+to_string(x)+"\n"+"-: "+to_string(inc)+"\n";
+    return resp;
+}
