@@ -58,6 +58,9 @@ int sistema::listar_secuencias(){
     return arch.listar_sec();
 
 }
+int sistema::enmascarar(string sub){
+    return arch.enmascarar(sub);
+}
 int sistema::guardar(string nombre){
     return -1;
 }
