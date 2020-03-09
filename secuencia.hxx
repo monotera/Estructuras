@@ -4,8 +4,10 @@
 #include <string>
 #include <vector>
 
+
 using namespace std;
 
+void findAndReplaceAll(std::string & data, std::string toSearch, std::string replaceStr);
 
 int secuencia::getAncho(){
     return this->ancho;
@@ -33,7 +35,29 @@ int secuencia::esSubSecuencia(string sub){
     return cant;
 }
 int secuencia::enmascarar(string sub){
-    return -1;
+    int cantiEnmascarar = esSubSecuencia(sub);
+    string replaceSTR;
+    for(int i = 0; i < sub.size(); ++i)
+        replaceSTR += "X";
+    list<string>::iterator it = linea.begin();
+    for(;it != linea.end();it++){
+        findAndReplaceAll(*it,sub,replaceSTR);   
+    }
+    return cantiEnmascarar;
+}
+void findAndReplaceAll(std::string & data, std::string toSearch, std::string replaceStr)
+{
+	// Get the first occurrence
+	size_t pos = data.find(toSearch);
+ 
+	// Repeat till end is reached
+	while( pos != std::string::npos)
+	{
+		// Replace this occurrence of Sub String
+		data.replace(pos, toSearch.size(), replaceStr);
+		// Get the next occurrence from the current position
+		pos =data.find(toSearch, pos + replaceStr.size());
+	}
 }
 string secuencia::getDescripcione(){
     return this->descripcion;

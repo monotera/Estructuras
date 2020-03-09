@@ -104,6 +104,16 @@ int main(int argc, char *argv[])
                 secuencia = new char[strlen(palabra[2])];
                 strcpy(secuencia, palabra[2]);
                 cout << "---ENMASCARAR---" << endl;
+                int cantiSec = sys.enmascarar(secuencia);
+                if(sys.conteo() == 0){
+                    cout << "No hay secuencias cargadas en memoria." <<endl;
+                }
+                else if(cantiSec == 0)
+                    cout << "La secuencia dada no existe, por tanto no se enmascara nada." <<endl;
+                else if(cantiSec == 1)
+                    cout << "1 secuencia ha sido enmascarada."<<endl;
+                else
+                    cout << cantiSec << " secuencias han sido enmascaradas." << endl;
             }
             else
                 cout << "El numero de comandos es invalido" << endl;
