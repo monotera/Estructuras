@@ -26,7 +26,7 @@ public:
     void imprimirSec(secuencia sec, int sec_incompleta);
     int esSubSecuencia(string sub);
     int enmascarar(string sub);
-	/*histograma(Pdescripcion), Obtiene el histograma de la secuencia con la descripcion dada, en caso de que exista*/
+	string histograma(string desc);
 };
 
 

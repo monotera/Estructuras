@@ -70,4 +70,12 @@ int archivo::esSubSecuencia(string sub){
         resp+=(*it).esSubSecuencia(sub);
     return resp;
 }
-/*histograma(Pdescripcion), Obtiene el histograma de la secuencia con la descripcion dada, en caso de que exista*/
+
+string archivo::histograma(string desc){
+    string resp = "";
+    list<secuencia>::iterator it = secuencias.begin();
+    for(;it!=secuencias.end();it++)
+        if((*it).getDescripcione()==desc)
+            resp = (*it).histograma();
+    return resp;
+}
