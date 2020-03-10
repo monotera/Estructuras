@@ -13,7 +13,6 @@ class sistema
 private:
    archivo arch;
 public:
-    archivo getArchivo();
     int cargarArchivo(string nombre);
     int conteo();
     int listar_secuencias();

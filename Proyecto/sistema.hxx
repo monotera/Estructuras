@@ -3,22 +3,21 @@
 #include <fstream>
 #include <string>
 #include <string.h>
+#include <algorithm>
 #include "archivo.h"
 #include "sistema.h"
 
 using namespace std;
 
 
-
-archivo sistema::getArchivo(){
-    return arch;
- }
  /*-1  = el archivo no se pudo abrir
     0  = el archivo esta vacio
     1  = el archivo tiene una secuencia
     2 o mayor = el archivo tiene n secuencias*/
 int sistema::cargarArchivo(string nombre){
 
+    if(conteo() > 0)
+        arch.borrarSec();
     string line;
     ifstream myFile(nombre);
     if(myFile.is_open()){
@@ -59,19 +58,23 @@ int sistema::listar_secuencias(){
 
 }
 int sistema::enmascarar(string sub){
+    transform(sub.begin(), sub.end(), sub.begin(), (int (*)(int))std::toupper);
     return arch.enmascarar(sub);
 }
 int sistema::guardar(string nombre){
-    return -1;
+    return arch.guardar(nombre);
+    
 }
 string sistema::getNombre(){
     return  arch.getNombreArchivo();
 }
 
 int sistema::esSubSecuencia(string sub){
+    transform(sub.begin(), sub.end(), sub.begin(), (int (*)(int))std::toupper);
     return arch.esSubSecuencia(sub);
 }
 
 string sistema::histograma(string desc){
+    transform(desc.begin(), desc.end(), desc.begin(), (int (*)(int))std::toupper);
     return arch.histograma(desc);
 }

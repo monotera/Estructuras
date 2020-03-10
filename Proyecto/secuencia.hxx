@@ -9,12 +9,7 @@ using namespace std;
 
 void findAndReplaceAll(std::string & data, std::string toSearch, std::string replaceStr);
 
-int secuencia::getAncho(){
-    return this->ancho;
-}
-void secuencia::setAncho(int ancho){
-    this->ancho = ancho;
-}
+
 list <string> secuencia::getLineas(){
     return this->linea;
 }
@@ -72,17 +67,20 @@ int secuencia::setCantiBase(){
     for(it = linea.begin(); it != linea.end();it++){
             vector <char> linea ((*it).begin(),(*it).end());
             for(int i = 0; i < (*it).length(); ++i){
-                if(linea[i] == 'A' || linea[i] == 'C' || linea[i] == 'G' || linea[i] == 'T' || linea[i] == 'U'){
+                if(linea[i] == 'A' || linea[i] == 'C'  || linea[i] == 'G' ||
+                   linea[i] == 'T' || linea[i] == 'U'  || linea[i] == 'R' ||
+                   linea[i] == 'Y' || linea[i] == 'K'  || linea[i] == 'M' ||
+                   linea[i] == 'S' || linea[i] == 'W'  || linea[i] == 'B' ||
+                   linea[i] == 'D' || linea[i] == 'H'  || linea[i] == 'V' ||
+                   linea[i] == 'N' || linea[i] == 'X' )
                     cont++;
-                }
-                if(linea[i] == '-'){
+                else if(linea[i] == '-')
                     incompleto = -1;
-                }
         }
     }
     this->cantiBase = cont;
     return  incompleto;
-}
+}   
 int secuencia::getCantiBase(){
     return this->cantiBase;
 }
