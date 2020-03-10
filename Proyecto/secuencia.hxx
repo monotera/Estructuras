@@ -69,15 +69,15 @@ int secuencia::setCantiBase(){
     list <string> :: iterator it;
     long cont = 0;
     int incompleto = 0;
-    for(it = linea.begin(); it != linea.end();it++){
+    for(it = linea.begin(); it != linea.end() && incompleto != -1;it++){
             vector <char> linea ((*it).begin(),(*it).end());
-            for(int i = 0; i < (*it).length(); ++i){
-                if(linea[i] == 'A' || linea[i] == 'C' || linea[i] == 'G' || linea[i] == 'T' || linea[i] == 'U'){
-                    cont++;
-                }
+            for(int i = 0; i < (*it).length() && incompleto != -1; ++i){
+            
                 if(linea[i] == '-'){
                     incompleto = -1;
                 }
+                else 
+                    cont++;
         }
     }
     this->cantiBase = cont;

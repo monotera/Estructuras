@@ -132,6 +132,16 @@ int main(int argc, char *argv[])
                 archivo = new char[strlen(palabra[2])];
                 strcpy(archivo, palabra[2]);
                 cout << "---GUARDAR---" << endl;
+                if(sys.conteo() == 0){
+                    cout << "No hay secuencias cargadas en memoria." << endl;
+                }
+                else if (sys.guardar(archivo) == 0){
+                    cout << "Las secuncias han sido guardadas en " << archivo << ".fa" << endl;
+                }
+                else if(sys.guardar(archivo) == 0){
+
+                }
+                    
             }
             else
                 cout << "El numero de comandos es invalido" << endl;

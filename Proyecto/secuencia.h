@@ -14,7 +14,7 @@ protected:
     list <string> linea;
     int ancho;
     string descripcion;
-    long cantiBase;
+    long cantiBase = 0;
 public:
     int getAncho();
     void setAncho(int ancho);

@@ -3,6 +3,7 @@
 #include<string>
 #include "secuencia.h"
 #include "archivo.h"
+#include <fstream>
 
 using namespace std;
 
@@ -78,4 +79,22 @@ string archivo::histograma(string desc){
         if((*it).getDescripcione()==desc)
             resp = (*it).histograma();
     return resp;
+}
+int archivo::guardar(string nombre){
+
+    ofstream arch(nombre + ".fa",ios::out);
+    int i = 0;
+    if(arch.is_open()){
+        list <secuencia> :: iterator it;
+        for(it = secuencias.begin(); it != secuencias.end();++it){
+            arch << it->getDescripcione()<<endl;
+            list <string> :: iterator its;
+            list <string> actual = it->getLineas();
+            for(its = actual.begin(); its != actual.end(); its++){
+                arch << *its << endl;
+            }
+        }
+        return 0;
+    }
+    return -1;
 }

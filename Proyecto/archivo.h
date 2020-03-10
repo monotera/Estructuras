@@ -27,6 +27,7 @@ public:
     int esSubSecuencia(string sub);
     int enmascarar(string sub);
 	string histograma(string desc);
+    int guardar(string nombre);
 };
 
 

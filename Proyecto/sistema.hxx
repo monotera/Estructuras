@@ -62,7 +62,8 @@ int sistema::enmascarar(string sub){
     return arch.enmascarar(sub);
 }
 int sistema::guardar(string nombre){
-    return -1;
+    return arch.guardar(nombre);
+    
 }
 string sistema::getNombre(){
     return  arch.getNombreArchivo();
