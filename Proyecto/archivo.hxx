@@ -4,12 +4,10 @@
 #include "secuencia.h"
 #include "archivo.h"
 #include <fstream>
-
+#include <algorithm>
 using namespace std;
 
-int archivo::archivos(){
-    return -1;
-}
+
 string archivo::getNombreArchivo(){
     return this->nombre;
 }
@@ -21,12 +19,6 @@ list <secuencia> archivo::getSecuencias(){
 }
 void archivo::agregarSecuencia(secuencia nuevaSec){
    this->secuencias.push_back(nuevaSec);
-}
-int archivo::listarSecuencias(){
-    return -1;
-}
-int archivo::conteo(){
-    return -1;
 }
 int archivo::getTamaSec(){
     return this->secuencias.size();
@@ -75,9 +67,12 @@ int archivo::esSubSecuencia(string sub){
 string archivo::histograma(string desc){
     string resp = "";
     list<secuencia>::iterator it = secuencias.begin();
-    for(;it!=secuencias.end();it++)
-        if((*it).getDescripcione()==desc)
+    for(;it!=secuencias.end();it++){
+        string descUpper = (*it).getDescripcione();
+        transform(descUpper.begin(), descUpper.end(), descUpper.begin(), (int (*)(int))std::toupper);
+        if(descUpper == desc)
             resp = (*it).histograma();
+    }
     return resp;
 }
 int archivo::guardar(string nombre){
@@ -97,4 +92,7 @@ int archivo::guardar(string nombre){
         return 0;
     }
     return -1;
+}
+void archivo::borrarSec(){
+    this->secuencias.clear();
 }

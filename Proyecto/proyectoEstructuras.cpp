@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
                 strcpy(secuencia, palabra[2]);
                 cout << "---ES_SUBSECUENCIA---" << endl;
                 int sub = sys.esSubSecuencia(secuencia);
-                if(sys.getArchivo().getSecuencias().empty())
+                if(sys.conteo() == 0)
                     cout << "No hay secuencias cargas en memoria.\n";
                 else if(sub==0)
                     cout << "La secuencia dada no existe.\n";
@@ -138,8 +138,8 @@ int main(int argc, char *argv[])
                 else if (sys.guardar(archivo) == 0){
                     cout << "Las secuncias han sido guardadas en " << archivo << ".fa" << endl;
                 }
-                else if(sys.guardar(archivo) == 0){
-
+                else if(sys.guardar(archivo) == -1){
+                    cout << "Error guardando en " << archivo << ".fa" << endl;
                 }
                     
             }

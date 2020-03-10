@@ -9,12 +9,7 @@ using namespace std;
 
 void findAndReplaceAll(std::string & data, std::string toSearch, std::string replaceStr);
 
-int secuencia::getAncho(){
-    return this->ancho;
-}
-void secuencia::setAncho(int ancho){
-    this->ancho = ancho;
-}
+
 list <string> secuencia::getLineas(){
     return this->linea;
 }
@@ -69,20 +64,23 @@ int secuencia::setCantiBase(){
     list <string> :: iterator it;
     long cont = 0;
     int incompleto = 0;
-    for(it = linea.begin(); it != linea.end() && incompleto != -1;it++){
+    for(it = linea.begin(); it != linea.end();it++){
             vector <char> linea ((*it).begin(),(*it).end());
-            for(int i = 0; i < (*it).length() && incompleto != -1; ++i){
-            
-                if(linea[i] == '-'){
-                    incompleto = -1;
-                }
-                else 
+            for(int i = 0; i < (*it).length(); ++i){
+                if(linea[i] == 'A' || linea[i] == 'C'  || linea[i] == 'G' ||
+                   linea[i] == 'T' || linea[i] == 'U'  || linea[i] == 'R' ||
+                   linea[i] == 'Y' || linea[i] == 'K'  || linea[i] == 'M' ||
+                   linea[i] == 'S' || linea[i] == 'W'  || linea[i] == 'B' ||
+                   linea[i] == 'D' || linea[i] == 'H'  || linea[i] == 'V' ||
+                   linea[i] == 'N' || linea[i] == 'X' )
                     cont++;
+                else if(linea[i] == '-')
+                    incompleto = -1;
         }
     }
     this->cantiBase = cont;
     return  incompleto;
-}
+}   
 int secuencia::getCantiBase(){
     return this->cantiBase;
 }
