@@ -20,12 +20,13 @@ int secuencia::esSubSecuencia(string sub){
     int cant = 0;
     list<string>::iterator it = linea.begin();
     size_t p;
-    for(;it != linea.end();it++){
-        p = (*it).find(sub);
-        while(p!=string::npos){
-            cant++;
-            p = (*it).find(sub, p+sub.size());
-        }
+    string combinado = "";
+    for(;it != linea.end();it++)
+        combinado+=(*it);
+    p = combinado.find(sub);
+    while(p!=string::npos){
+        cant++;
+        p = combinado.find(sub, p+sub.size());
     }
     return cant;
 }
@@ -91,29 +92,42 @@ void secuencia::borrarLineas(){
 string secuencia::histograma(){
     string resp = "";
     int a,c,g,t,u,r,y,k,m,s,w,b,d,h,v,n,x,inc;
-    a = esSubSecuencia("A");  
+    a = esSubSecuencia("A"); 
+    if(a!=0)resp+="A: "+to_string(a)+"\n"; 
     c = esSubSecuencia("C");
+    if(c!=0)resp+="C: "+to_string(c)+"\n";
     g = esSubSecuencia("G");
+    if(g!=0)resp+="G: "+to_string(g)+"\n";
     t = esSubSecuencia("T");
+    if(t!=0)resp+="T: "+to_string(t)+"\n";
     u = esSubSecuencia("U");
+    if(u!=0)resp+="U: "+to_string(u)+"\n";
     r = esSubSecuencia("R");
+    if(r!=0)resp+="R: "+to_string(r)+"\n";
     y = esSubSecuencia("Y");
+    if(y!=0)resp+="Y: "+to_string(y)+"\n";
     k = esSubSecuencia("K");
+    if(k!=0)resp+="K: "+to_string(k)+"\n";
     m = esSubSecuencia("M");
+    if(m!=0)resp+="M: "+to_string(m)+"\n";
     s = esSubSecuencia("S");
+    if(s!=0)resp+="S: "+to_string(s)+"\n";
     w = esSubSecuencia("W");
+    if(w!=0)resp+="W: "+to_string(w)+"\n";
     b = esSubSecuencia("B");  
+    if(b!=0)resp+="B: "+to_string(b)+"\n";
     d = esSubSecuencia("D"); 
+    if(d!=0)resp+="D: "+to_string(d)+"\n";
     h = esSubSecuencia("H"); 
+    if(h!=0)resp+="H: "+to_string(h)+"\n";
     v = esSubSecuencia("V"); 
+    if(v!=0)resp+="V: "+to_string(v)+"\n";
     n = esSubSecuencia("N"); 
+    if(n!=0)resp+="N: "+to_string(n)+"\n";
     x = esSubSecuencia("X");
+    if(x!=0)resp+="X: "+to_string(x)+"\n";
     inc = esSubSecuencia("-");
-    resp+="A: "+to_string(a)+"\n"+"C: "+to_string(c)+"\n"+"G: "+to_string(g)+"\n"+
-    "T: "+to_string(t)+"\n"+"U: "+to_string(u)+"\n"+"R: "+to_string(r)+"\n"+
-    "Y: "+to_string(y)+"\n"+"K: "+to_string(k)+"\n"+"M: "+to_string(k)+"\n"+
-    "S: "+to_string(s)+"\n"+"W: "+to_string(w)+"\n"+"B: "+to_string(b)+"\n"+
-    "D: "+to_string(d)+"\n"+"H: "+to_string(h)+"\n"+"V: "+to_string(v)+"\n"+
-    "N: "+to_string(n)+"\n"+"X: "+to_string(x)+"\n"+"-: "+to_string(inc)+"\n";
+    if(inc!=0)resp+="-: "+to_string(inc)+"\n";
+    
     return resp;
 }
