@@ -20,7 +20,6 @@ public:
 	void agregarSecuencia(secuencia nuevaSec);
     int getTamaSec();
     int listar_sec();
-    void imprimirSec(secuencia sec, int sec_incompleta);
     int esSubSecuencia(string sub);
     int enmascarar(string sub);
 	string histograma(string desc);
