@@ -18,10 +18,8 @@ class arbolGeneral
         bool eliminarNdo (T n);
         bool buscar(T n);
         int altura();
-        int altura(nodoGeneral<T>* nodo);
         unsigned int tamano();
         void preOrder();
-        void preOrder(nodoGeneral<T>* nodo);
         void posOrden();
         void nivelOrden();
 };

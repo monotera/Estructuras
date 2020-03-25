@@ -11,7 +11,7 @@ arbolGeneral<T>::arbolGeneral()
 template <class T>
 arbolGeneral<T>::arbolGeneral(T val)
 {
-    nodoGeneral<T>* nodo = new nodoGeneral<T>;
+    nodoGeneral<T> *nodo = new nodoGeneral<T>;
     nodo->fijarDato(val);
     this->raiz = nodo;
 }
@@ -35,114 +35,118 @@ template <class T>
 void arbolGeneral<T>::fijarRaiz(nodoGeneral<T> *nraiz)
 {
     this->raiz = nraiz;
-}
+}    
+//Si el arbol esta vacio:
+//crear nuevo nodo, asignar el dato, poner ese nodo como raiz
+//Si hay al menos un nodo en el arbol:
+//-Revisar el nodo donde estoy para ver si coincide con padre
+//-Si es padre, insertar ahi el nuevo hijo
+//-Si no es el padre, revisar cada nodo hijo y llamar a insertar alli
 template <class T>
 bool arbolGeneral<T>::insertarNodo(T padre, T n)
 {
-    //Si el arbol esta vacio:
-    //crear nuevo nodo, asignar el dato, poner ese nodo como raiz
-    
-    //Si hay al menos un nodo en el arbol:
-    //-Revisar el nodo donde estoy para ver si coincide con padre
-    //-Si es padre, insertar ahi el nuevo hijo
-    //-Si no es el padre, revisar cada nodo hijo y llamar a insertar alli
-    //
+    bool ins = false;
 
+    if (this->esVacio())
+    {
+        nodoGeneral<T> *nodo = new nodoGeneral<T>;
+        nodo->fijarDato(n);
+        this->raiz = nodo;
+        ins = true;
+    }
+    else{
+        ins = this->raiz->insertarNodo(padre,n);
+    }
+    return ins;
+   
 }
+//Verificar que el arbol no este vacio
+//Si es la raiz la que quiero eliminar
+//-Hacer delete a raiz
+//-Poner raiz en nulo
+//Si hay almenos un nodo en el arbol:
+//-Si alguno de los hijos es el que quiero eliminar
+//-Si ninguno es el que quiero eliminar:
+//-revisar cada nodo hijo y llamar a eliminar alli
 template <class T>
 bool arbolGeneral<T>::eliminarNdo(T n)
 {
-    //Verificar que el arbol no este vacio
-
-    //Si es la raiz la que quiero eliminar
-    //-Hacer delete a raiz
-    //-Poner raiz en nulo
-
-    //Si hay almenos un nodo en el arbol:
-    //-Si alguno de los hijos es el que quiero eliminar
-    //-Si ninguno es el que quiero eliminar: 
-    //-revisar cada nodo hijo y llamar a eliminar alli
-
+    bool del = false
+    if(!this->esVacio()){
+        if(this->raiz == n){
+            delete this->raiz;
+            this->raiz = NULL;
+            del = true;
+        }
+        else
+            del = this->raiz->eliminarNodo(n);
+    }
+        
+    return del;
 }
+//Verificar que el arbol no este vacio
+//Comparo dato en el nodo actual con dato parametro
+//Si es ese, retorno que lo encontre
+//Si no, para cada nodo hijo hacer el llamado a buscar
 template <class T>
 bool arbolGeneral<T>::buscar(T n)
 {
-    //Verificar que el arbol no este vacio
-    //Comparo dato en el nodo actual con dato parametro
-    //Si es ese, retorno que lo encontre
-    //Si no, para cada nodo hijo hacer el llamado a buscar
-
+    bool encontrado = false;
+    if(!this->esVacio()){
+        if(this->raiz == n){
+            encontrado = true;
+        }
+        else
+            encontrado = this->raiz->buscar(n);
+    }
+    return encontrado;
 }
 template <class T>
 int arbolGeneral<T>::altura()
 {
-    if(this->esVacio())
+    if (this->esVacio())
         return -1;
     else
     {
-        return this->altura(this->raiz);
+        return this->raiz->altura();
     }
-    
-
 }
-template <class T>
-int arbolGeneral<T>::altura(nodoGeneral<T>* nodo)
-{
-    int alt = -1;
-
-    if(nodo->esHoja()){
-        alt = 0;
-    }
-    else
-    {
-        list<nodoGeneral<T>*>::iterator it;
-        for(it = nodo->desc.begin(); it!= nodo->desc.end(); ++it){
-            alth = this->altura(*it);
-            if(alt < alth+1)
-                alt = alth+1;   
-        }
-    }   
-
-    return alt;
-}
+//Si el arbol esta vacio, retorno 0
+//para cada uno de los hijos, llamo a tamano
+//acumulo esos tamanos en una variable
+//retorno ese valor acumulado + 1
 template <class T>
 unsigned int arbolGeneral<T>::tamano()
 {
-    //Si el arbol esta vacio, retorno 0
-    //para cada uno de los hijos, llamo a tamano
-    //acumulo esos tamanos en una variable 
-    //retorno ese valor acumulado + 1
+    unsigned int tama = 0;
+    if(!this->esVacio()){
+        tama = this->raiz->tamano();
+    }
+    return tama;
+    
 }
 template <class T>
 void arbolGeneral<T>::preOrder()
 {
-    if(!this->vacio())
-        this->preOrder(this->raiz);
-
+    if (!this->vacio())
+        this->raiz->preOrder();
 }
-template <class T>
-void arbolGeneral<T>::preOrder(nodoGeneral<T>* nodo){
-    cout << nodo->obtenerDato() << "    ";
-
-    list<nodoGeneral<T>*>::iterator it;
-    for(it = nodo->desc.begin(); it!= nodo->desc.end(); ++it){
-        this->preOrder(*it);
-    }
-}
+//Llamar a pos orden sobre cada hijo
+//imprimir en pantalla el daro del nodo actual
 template <class T>
 void arbolGeneral<T>::posOrden()
 {
-    //Llamar a pos orden sobre cada hijo
-    //imprimir en pantalla el daro del nodo actual
-
-}
+    if (!this->vacio())
+        this->raiz->posOrden();
+} 
+//NO ES RECURRENTE
+//ubicarme en la raiz
+//poner la raiz en una cola
+//-Hacer un ciclo mientras haya algo en la cola
+//-imprimo su dato
+//-inserto en la cola todos sus hijos
 template <class T>
 void arbolGeneral<T>::nivelOrden()
 {
-    //NO ES RECURRENTE
-    //ubicarme en la raiz 
-    //poner la raiz en una cola
-    //-Hacer un ciclo mientras haya algo en la cola
-    //-imprimo su dato
-    //-inserto en la cola todos sus hijos 
+     
 }

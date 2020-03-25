@@ -18,6 +18,14 @@ class nodoGeneral
          void adicionarDesc(T& nval);
          bool eliminarDesc(T& val);
          bool esHoja();
+         bool insertarNodo(T padre,T n);
+         bool eliminarNdo(T n);
+         bool buscar(T n);
+         int  altura();
+         unsigned int tamano();
+         void preOrder();
+         void posOrden();
+         void nivelOrden();
 };
 
 #include "nodoGeneral.hxx"
