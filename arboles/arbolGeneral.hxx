@@ -71,15 +71,9 @@ bool arbolGeneral<T>::insertarNodo(T padre, T n)
 template <class T>
 bool arbolGeneral<T>::eliminarNdo(T n)
 {
-    bool del = false
+    bool del = false;
     if(!this->esVacio()){
-        if(this->raiz == n){
-            delete this->raiz;
-            this->raiz = NULL;
-            del = true;
-        }
-        else
-            del = this->raiz->eliminarNodo(n);
+        del = this->raiz->eliminarNdo(n);
     }
         
     return del;
@@ -93,11 +87,7 @@ bool arbolGeneral<T>::buscar(T n)
 {
     bool encontrado = false;
     if(!this->esVacio()){
-        if(this->raiz == n){
-            encontrado = true;
-        }
-        else
-            encontrado = this->raiz->buscar(n);
+        encontrado = this->raiz->buscar(n);
     }
     return encontrado;
 }
@@ -122,22 +112,27 @@ unsigned int arbolGeneral<T>::tamano()
     if(!this->esVacio()){
         tama = this->raiz->tamano();
     }
-    return tama;
-    
+    return tama+1;
 }
 template <class T>
 void arbolGeneral<T>::preOrder()
 {
-    if (!this->vacio())
+    if (!this->esVacio())
         this->raiz->preOrder();
+    else
+        cout << "El arbol esta vacio" <<endl;
+    cout <<endl;
 }
 //Llamar a pos orden sobre cada hijo
 //imprimir en pantalla el daro del nodo actual
 template <class T>
 void arbolGeneral<T>::posOrden()
 {
-    if (!this->vacio())
+    if (!this->esVacio())
         this->raiz->posOrden();
+    else
+        cout << "El arbol esta vacio" <<endl;
+    cout <<endl;
 } 
 //NO ES RECURRENTE
 //ubicarme en la raiz
@@ -148,5 +143,9 @@ void arbolGeneral<T>::posOrden()
 template <class T>
 void arbolGeneral<T>::nivelOrden()
 {
-     
+     if (!this->esVacio())
+        this->raiz->nivelOrden();
+    else
+        cout << "El arbol esta vacio" <<endl;
+    cout <<endl;
 }

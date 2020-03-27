@@ -2,8 +2,10 @@
 #include <iostream>
 #include <list>
 #include <queue>
+
 using namespace std;
 
+    
 template <class T>
 nodoGeneral<T>::nodoGeneral()
 {
@@ -13,7 +15,7 @@ nodoGeneral<T>::nodoGeneral()
 template <class T>
 nodoGeneral<T>::~nodoGeneral()
 {
-    list<nodoGeneral<T>>::iterator it;
+    typename list <nodoGeneral<T>*>::iterator it;
     for (it = desc.begin(); it != desc.end(); ++it)
         delete *it;
     this->desc.clear();
@@ -44,7 +46,7 @@ template <class T>
 bool nodoGeneral<T>::eliminarDesc(T &val)
 {
     //Buscar el nodo con el valor dado
-    list<nodoGeneral<T> *>::iterator it;
+    typename list<nodoGeneral<T> *>::iterator it;
     nodoGeneral<T> *aux;
     bool eliminado = false;
     for (it = desc.begin(); it != desc.end(); ++it)
@@ -77,7 +79,7 @@ bool nodoGeneral<T>::insertarNodo(T padre, T n)
         return true;
     }
     bool ins = false;
-    list<nodoGeneral<T> *>::iteratore it;
+    typename list<nodoGeneral<T> *>::iterator it;
     for (it = desc.begin(); it != desc.end(); ++it)
     {
         ins = (*it)->insertarNodo(padre, n);
@@ -91,10 +93,10 @@ bool nodoGeneral<T>::eliminarNdo(T n)
     del = this->eliminarDesc(n);
     if (!del)
     {
-        list<nodoGeneral<T> *>::iteratore it;
+        typename list<nodoGeneral<T> *>::iterator it;
         for (it = desc.begin(); it != desc.end(); ++it)
         {
-            del = (*it)->eliminarNodo(n);
+            del = (*it)->eliminarNdo(n);
         }
     }
     return del;
@@ -109,8 +111,8 @@ bool nodoGeneral<T>::buscar(T n)
     }
     if (!encontrado)
     {
-        list<nodoGeneral<T> *>::iteratore it;
-        for (it = desc.begin(); it != desc.end(); ++it)
+        typename list<nodoGeneral<T> *>::iterator it;
+        for (it = desc.begin(); it != desc.end() && !encontrado; ++it)
         {
             encontrado = (*it)->buscar(n);
         }
@@ -123,33 +125,31 @@ unsigned int nodoGeneral<T>::tamano()
 
     if (this->esHoja())
         return 0;
-    list<nodoGeneral<T> *>::iteratore it;
+    typename list<nodoGeneral<T> *>::iterator it;
     unsigned int tama = this->desc.size();
     for (it = desc.begin(); it != desc.end(); ++it)
     {
-        tamano += (*it)->tamano();
+        tama += (*it)->tamano();
     }
     return tama;
 }
 template <class T>
 void nodoGeneral<T>::posOrden()
 {
-    if (!this->esHoja())
-    {
-        list<nodoGeneral<T> *>::iteratore it;
+        typename list<nodoGeneral<T> *>::iterator it;
         for (it = desc.begin(); it != desc.end(); ++it)
         {
             (*it)->posOrden();
         }
         cout << this->obtenerDato() << "    ";
         return;
-    }
-    else
-    {
-        cout << this->obtenerDato() << "    ";
-        return;
-    }
 }
+//Definir col
+//Meter la raiz en la cola
+//ciclo mientras la cola no este vacia
+//saco el que este disponible en la cola y lo imprimo
+//hacer un ciclo con un iterator par sus desc
+//poner cada descendiente dentro de la cola
 template <class T>
 void nodoGeneral<T>::nivelOrden()
 {
@@ -165,7 +165,7 @@ int nodoGeneral<T>::altura()
     }
     else
     {
-        list<nodoGeneral<T> *>::iterator it;
+        typename list<nodoGeneral<T> *>::iterator it;
         for (it = desc.begin(); it != desc.end(); ++it)
         {
             int alth = (*it)->altura();
@@ -182,7 +182,7 @@ void nodoGeneral<T>::preOrder()
     cout << this->obtenerDato() << "    ";
     if (!this->esHoja())
     {
-        list<nodoGeneral<T> *>::iterator it;
+        typename list<nodoGeneral<T> *>::iterator it;
         for (it = desc.begin(); it != desc.end(); ++it)
         {
             (*it)->preOrder();

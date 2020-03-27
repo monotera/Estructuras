@@ -9,6 +9,7 @@ class nodoGeneral
     protected:
          T dato;
          std::list<nodoGeneral<T>* > desc;
+     public:
     public:
          nodoGeneral();
          ~nodoGeneral();
