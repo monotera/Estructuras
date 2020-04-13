@@ -190,7 +190,8 @@ NodoAVL<T> *ArbolAVL<T>::rotacionIzquierda(NodoAVL<T> *parent)
 template <class T>
 void ArbolAVL<T>::eliminar(T &val)
 {
-    raiz = balance(eliminarf(val, raiz));
+    if(!this->esVacio())
+        raiz = balance(eliminarf(val, raiz));
 }
 
 template <class T>
@@ -387,8 +388,25 @@ void ArbolAVL<T>::inOrdenL(NodoAVL<T> *inicio, list<T> &l)
 {
     if (inicio != NULL)
     {
-        inOrden(inicio->obtenerHijoIzq());
+        inOrdenL(inicio->obtenerHijoIzq(),l);
         l.push_back(inicio->obtenerDato());
-        inOrden(inicio->obtenerHijoDer());
+        inOrdenL(inicio->obtenerHijoDer(),l);
     }
+
+}
+template <class T>
+void ArbolAVL<T>::inOrdenL(list<T> &l){
+    inOrdenL(this->raiz,l);
+}
+template <class T>
+void ArbolAVL<T>::valorMax(T &mayor){
+  
+    if(!esVacio()){
+        NodoAVL<T> *valMax = this->raiz;
+        while(valMax->obtenerHijoDer() != NULL){
+            valMax = valMax->obtenerHijoDer();
+        }
+        mayor = valMax->obtenerDato();
+    }
+
 }
