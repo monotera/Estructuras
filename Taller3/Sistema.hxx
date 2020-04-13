@@ -2,6 +2,7 @@
 #include <fstream>
 #include <ctime>
 #include <math.h>
+#include <algorithm>
 
 void Sistema::uploadFile(string fName)
 {
@@ -35,14 +36,15 @@ void Sistema::fillTree()
             }
             else
             {
-                inOrderList.clear();
-                avl.inOrdenL(this->inOrderList);
-                mayor = this->inOrderList.back();
-                avl.eliminar(mayor);
+                if (!avl.esVacio())
+                {
+                    avl.valorMax(mayor);
+                    avl.eliminar(mayor);
+                }
             }
         }
         clock_t end_time = std::clock();
-        cout << avl.tamano() << endl;
+        this->fillInOrderList();
         this->tiempo_arbol = (end_time - init_time) / double(CLOCKS_PER_SEC);
     }
 }
@@ -70,7 +72,6 @@ void Sistema::fillSet()
                 }
             }
         }
-        cout <<endl <<set1.size()<<endl;
         clock_t end_time = std::clock();
         this->tiempo_set = (end_time - init_time) / double(CLOCKS_PER_SEC);
     }
@@ -86,8 +87,11 @@ void Sistema::fillVec()
             if ((*it)[0] == 'A' || (*it)[0] == 'a')
             {
                 cod = atoi((*it).substr(1, 7).c_str());
-                vec.push_back(cod);
-                push_heap(vec.begin(), vec.end());
+                if (find(vec.begin(), vec.end(), cod) == vec.end())
+                {
+                    vec.push_back(cod);
+                    push_heap(vec.begin(), vec.end());
+                }
             }
             else
             {
@@ -99,11 +103,28 @@ void Sistema::fillVec()
             }
         }
         clock_t end_time = std::clock();
-        cout << vec.size();
         this->tiempo_vec = (end_time - init_time) / double(CLOCKS_PER_SEC);
     }
 }
-
+void Sistema::fillInOrderList()
+{
+    if (!avl.esVacio())
+    {
+        avl.inOrdenL(this->inOrderList);
+    }
+}
+list<int> Sistema::getInOrderList()
+{
+    return this->inOrderList;
+}
+set<int> Sistema::getSet()
+{
+    return this->set1;
+}
+deque<int> Sistema::getVec()
+{
+    return this->vec;
+}
 double Sistema::getTiempo_arbol()
 {
     return this->tiempo_arbol;

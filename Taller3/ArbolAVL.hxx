@@ -398,3 +398,15 @@ template <class T>
 void ArbolAVL<T>::inOrdenL(list<T> &l){
     inOrdenL(this->raiz,l);
 }
+template <class T>
+void ArbolAVL<T>::valorMax(T &mayor){
+  
+    if(!esVacio()){
+        NodoAVL<T> *valMax = this->raiz;
+        while(valMax->obtenerHijoDer() != NULL){
+            valMax = valMax->obtenerHijoDer();
+        }
+        mayor = valMax->obtenerDato();
+    }
+
+}

@@ -31,6 +31,10 @@ public:
     double getTiempo_arbol();
     double getTiempo_set();
     double getTiempo_vec();
+    deque <int> getVec();
+    set<int> getSet();
+    list<int> getInOrderList();
+    void fillInOrderList();
 };
 
 

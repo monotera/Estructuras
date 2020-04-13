@@ -76,4 +76,7 @@ int main()
     cout << endl
          << a.altura() << endl;
     cout << a.tamano() << endl;
+    a.valorMax(x);
+    cout << x<<endl;
+
 }

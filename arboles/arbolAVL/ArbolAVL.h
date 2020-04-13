@@ -39,6 +39,8 @@ public:
     NodoAVL<T> *balance(NodoAVL<T> *);
     void inOrdenL(NodoAVL<T> *inicio, list<T> &l);
     void inOrdenL(list<T> &l);
+    void  valorMax(T &mayor);
+
 };
 
 #include "ArbolAVL.hxx"
