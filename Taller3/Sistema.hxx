@@ -106,6 +106,24 @@ void Sistema::fillVec()
         this->tiempo_vec = (end_time - init_time) / double(CLOCKS_PER_SEC);
     }
 }
+bool Sistema::isEqual()
+{
+    sort(vec.begin(), vec.end());
+    list<int>::iterator it = inOrderList.begin();
+    set<int>::iterator its = set1.begin();
+    deque<int>::iterator itv = vec.begin();
+    if (inOrderList.size() == vec.size() && vec.size() == set1.size())
+    {
+
+        for (; it != inOrderList.end(); it++, itv++, its++)
+        {
+            if (*it != *itv && *itv != *its)
+                return false;
+        }
+        return true;
+    }
+    return false;
+}
 void Sistema::fillInOrderList()
 {
     if (!avl.esVacio())

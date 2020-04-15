@@ -29,38 +29,12 @@ int main(int argc, char *argv[])
              << "El tamano del arbol fue   : " << l.size() << endl
              << "El tamano del set fue     : " << s.size() << endl
              << "El tamano del vector fue  : " << v.size() << endl;
-        cout << "-------------------------ARBOL----------------------------------------" << endl;
-        if (l.empty())
-            cout << "Vacio" << endl;
-        else
-        {
-            for (itl = l.begin(); itl != l.end(); itl++)
-            {
-                cout << *itl << ", ";
-            }
+        if(sys.isEqual()){
+            cout << "Tienen el mismo contenido" <<endl;
         }
-        cout << "\n-------------------------SET------------------------------------------" << endl;
-        if (s.empty())
-            cout << "Vacio" << endl;
-        else
-        {
-            for (its = s.begin(); its != s.end(); its++)
-            {
-                cout << *its << ", ";
-            }
+        else {
+            cout << "No tienen el mismo contenido" <<endl;
         }
-        cout << "\n-----------------------MONTICULO--------------------------------------" << endl;
-        //sort(v.begin(),v.end());
-        if (v.empty())
-            cout << "Vacio" << endl;
-        else
-        {
-            for (itd = v.begin(); itd != v.end(); itd++)
-            {
-                cout << *itd << ", ";
-            }
-        }
-        cout << endl;
     }
     else
         cout << "ERROR!" << endl;
