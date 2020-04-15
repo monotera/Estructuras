@@ -35,6 +35,7 @@ public:
     set<int> getSet();
     list<int> getInOrderList();
     void fillInOrderList();
+    bool isEqual();
 };
 
 
