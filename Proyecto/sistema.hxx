@@ -10,6 +10,17 @@
 using namespace std;
 
 
+struct sistema::datosBin{
+    int cantiBases;
+    vector<char> caracterBase;
+    vector<int> frecuenciaBase;
+    int cantiSecuencias;
+    vector<short> TamNombreSec;
+    vector<vector<char>> nombreSec;
+    vector<long> longiSec;
+    vector<short> identacion;
+    vector<string> binary_code;
+};
  /*-1  = el archivo no se pudo abrir
     0  = el archivo esta vacio
     1  = el archivo tiene una secuencia
