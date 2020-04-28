@@ -11,11 +11,14 @@ struct HuffmanArbol::comparar
         return (l->obtenerFreq() > r->obtenerFreq());
     }
 };
-void HuffmanArbol::generarArbol(char dato[], int freq[], int tama)
+void HuffmanArbol::generarArbol(char dato[], long freq[], int tama)
 {
     HuffmanNodo *left, *right, *top;
 
     priority_queue<HuffmanNodo *, vector<HuffmanNodo *>, comparar> minHeap;
+    for(int i = 0; i < minHeap.size();++i){
+        minHeap.pop();
+    }
     for (int i = 0; i < tama; i++)
     {
         minHeap.push(new HuffmanNodo(dato[i], freq[i]));
@@ -74,18 +77,29 @@ string HuffmanArbol::cifrar(string sec)
     {
         cifrado += this->obtenerCodigo(sec[i]);
     }
+    int tama = cifrado.size() % 8;
+    if(tama != 0){
+        for (int i = 0; i < 8 - tama; i++){
+            cifrado += "0";
+        }
+    }
     return cifrado;
 }
-string HuffmanArbol::desCifrar(string sec)
+string HuffmanArbol::desCifrar(string sec, long longiSec)
 {
     HuffmanNodo *nodo = this->raiz;
     string desCifrado = "";
+    int contador = 0;
     for (int i = 0; i < sec.size() +1; i++)
     {
         if (nodo->esHoja())
         {
             desCifrado += nodo->obtenerDato();
             nodo = this->raiz;
+            contador++;
+            if(contador == longiSec){
+                break;
+            }
         }
         if (sec[i] == '1')
         {
@@ -97,4 +111,7 @@ string HuffmanArbol::desCifrar(string sec)
         }
     }
     return desCifrado;
+}
+void HuffmanArbol::limpiar(){
+    this->raiz = NULL;
 }

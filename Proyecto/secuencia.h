@@ -25,6 +25,9 @@ public:
     int getCantiBase();
     int setCantiBase();
     void borrarLineas();
+    string getSecuenciaLinea();
+    void crearLista(int f[]);
+    int getIndentacion();
 };
 
 

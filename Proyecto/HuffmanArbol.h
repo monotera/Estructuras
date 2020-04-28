@@ -14,13 +14,14 @@ private:
 
 public:
     HuffmanArbol();
-    void generarArbol(char dato[], int freq[],int size);
+    void generarArbol(char dato[], long freq[],int size);
     struct comparar;
     void guardarCodigos(HuffmanNodo *inicio, string str);
     void imprimirCodigos();
     string obtenerCodigo(char caracter);
     string cifrar(string secunecia);
-    string desCifrar(string cif);
+    string desCifrar(string cif, long longiSec);
+    void limpiar();
 };
 
 

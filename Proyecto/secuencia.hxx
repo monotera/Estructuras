@@ -131,3 +131,36 @@ string secuencia::histograma(){
     
     return resp;
 }
+string secuencia::getSecuenciaLinea(){
+    string secLinea = "";
+    list <string>::iterator it;
+    for(it = linea.begin(); it != linea.end(); it++){
+        secLinea += *it;
+    }
+    return secLinea;
+
+}
+int secuencia::getIndentacion(){
+    return this->linea.front().size();
+}
+void secuencia::crearLista(int f[]){
+    list<int> resp;
+    f[0] = esSubSecuencia("A"); 
+    f[1] = esSubSecuencia("C");
+    f[2] = esSubSecuencia("G");
+    f[3] = esSubSecuencia("T");
+    f[4] = esSubSecuencia("U");
+    f[5] = esSubSecuencia("R");
+    f[6] = esSubSecuencia("Y");
+    f[7] = esSubSecuencia("K");
+    f[8] = esSubSecuencia("M");
+    f[9] = esSubSecuencia("S");
+    f[10] = esSubSecuencia("W");
+    f[11] = esSubSecuencia("B");  
+    f[12] = esSubSecuencia("D"); 
+    f[13] = esSubSecuencia("H"); 
+    f[14] = esSubSecuencia("V"); 
+    f[15] = esSubSecuencia("N"); 
+    f[16] = esSubSecuencia("X");
+    f[17] = esSubSecuencia("-");
+}

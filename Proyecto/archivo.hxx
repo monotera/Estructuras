@@ -9,7 +9,8 @@ using namespace std;
 
 
 string archivo::getNombreArchivo(){
-    return this->nombre;
+    nombre.erase(nombre.end()-3, nombre.end());
+    return nombre;
 }
 void archivo::setNombreArchivo(string nombre){
     this->nombre = nombre;
@@ -85,4 +86,150 @@ int archivo::guardar(string nombre){
 }
 void archivo::borrarSec(){
     this->secuencias.clear();
+}
+vector<string> archivo::secuenciasLinea(){
+    vector<string> secLinea;
+    list <secuencia>::iterator it;
+    for(it = secuencias.begin(); it != secuencias.end();it++){
+        string linea = (*it).getSecuenciaLinea();
+        secLinea.push_back(linea);
+    }
+    return secLinea;
+}
+vector<string> archivo::getNombreSec(){
+    vector<string> nombres;
+    list <secuencia>::iterator it;
+    for(it = secuencias.begin(); it != secuencias.end();it++){
+        string linea = (*it).getDescripcione();
+        nombres.push_back(linea);
+    }
+    return nombres;
+}
+vector<short> archivo::getIdentaciones(){
+    vector<short> ide;
+    short num;
+    list <secuencia>::iterator it;
+    for(it = secuencias.begin(); it != secuencias.end();it++){
+        num = (*it).getIndentacion();
+        ide.push_back(num);
+    }
+    return ide;
+}
+short archivo::llenarArreglos(char car[],long fre[]){
+    list<secuencia>::iterator it = secuencias.begin();
+    int frec[18];
+    int a,c,g,t,u,r,y,k,m,s,w,b,d,h,v,n,x,inc;
+    a=c=g=t=u=r=y=k=m=s=w=b=d=h=v=n=x=inc=0;
+    for(;it!=secuencias.end();it++){
+        it->crearLista(frec);
+        a+=frec[0];
+        c+=frec[1];
+        g+=frec[2];
+        t+=frec[3];
+        u+=frec[4];
+        r+=frec[5];
+        y+=frec[6];
+        k+=frec[7];
+        m+=frec[8];
+        s+=frec[9];
+        w+=frec[10];
+        b+=frec[11];
+        d+=frec[12];
+        h+=frec[13];
+        v+=frec[14];
+        n+=frec[15];
+        x+=frec[16];
+        inc+=frec[17];
+    }
+    short i = 0;
+    if(a!=0){
+        car[i]='A';
+        fre[i]=a;
+        i++;
+    }
+    if(c!=0){
+        car[i]='C';
+        fre[i]=c;
+        i++;
+    }
+    if(g!=0){
+        car[i]='G';
+        fre[i]=g;
+        i++;
+    }
+    if(t!=0){
+        car[i]='T';
+        fre[i]=t;
+        i++;
+    }
+    if(u!=0){
+        car[i]='U';
+        fre[i]=u;
+        i++;
+    }
+    if(r!=0){
+        car[i]='R';
+        fre[i]=r;
+        i++;
+    }
+    if(y!=0){
+        car[i]='Y';
+        fre[i]=y;
+        i++;
+    }
+    if(k!=0){
+        car[i]='K';
+        fre[i]=k;
+        i++;
+    }
+    if(m!=0){
+        car[i]='M';
+        fre[i]=m;
+        i++;
+    }
+    if(s!=0){
+        car[i]='S';
+        fre[i]=s;
+        i++;
+    }
+    if(w!=0){
+        car[i]='W';
+        fre[i]=w;
+        i++;
+    }
+    if(b!=0){
+        car[i]='B';
+        fre[i]=b;
+        i++;
+    }
+    if(d!=0){
+        car[i]='D';
+        fre[i]=d;
+        i++;
+    }
+    if(h!=0){
+        car[i]='H';
+        fre[i]=h;
+        i++;
+    }
+    if(v!=0){
+        car[i]='V';
+        fre[i]=v;
+        i++;
+    }
+    if(n!=0){
+        car[i]='N';
+        fre[i]=n;
+        i++;
+    }
+    if(x!=0){
+        car[i]='X';
+        fre[i]=x;
+        i++;
+    }
+    if(inc!=0){
+        car[i]='-';
+        fre[i]=inc;
+    }
+    return i;
 }

@@ -25,6 +25,10 @@ public:
 	string histograma(string desc);
     int guardar(string nombre);
     void borrarSec();
+    vector<string> secuenciasLinea();
+    short llenarArreglos(char car[],long fre[]);
+    vector<string> getNombreSec();
+    vector<short> getIdentaciones();
 };
 
 
