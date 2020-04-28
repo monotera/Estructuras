@@ -59,6 +59,7 @@ string secuencia::getDescripcione(){
     return this->descripcion;
 }
 void secuencia::setDescripcion(string nuevaDesc){
+    nuevaDesc.erase(nuevaDesc.begin(),nuevaDesc.begin()+1);
    this->descripcion = nuevaDesc;
 }
 int secuencia::setCantiBase(){

@@ -12,8 +12,8 @@ string archivo::getNombreArchivo(){
     nombre.erase(nombre.end()-3, nombre.end());
     return nombre;
 }
-void archivo::setNombreArchivo(string nombre){
-    this->nombre = nombre;
+void archivo::setNombreArchivo(string nombrew){
+    this->nombre = nombrew;
 }
 list <secuencia> archivo::getSecuencias(){
     return this->secuencias;
@@ -68,12 +68,12 @@ string archivo::histograma(string desc){
 }
 int archivo::guardar(string nombre){
 
-    ofstream arch(nombre + ".fa",ios::out);
+    ofstream arch(nombre ,ios::out);
     int i = 0;
     if(arch.is_open()){
         list <secuencia> :: iterator it;
         for(it = secuencias.begin(); it != secuencias.end();++it){
-            arch << it->getDescripcione()<<endl;
+            arch << ">" + it->getDescripcione()<<endl;
             list <string> :: iterator its;
             list <string> actual = it->getLineas();
             for(its = actual.begin(); its != actual.end(); its++){
@@ -117,7 +117,7 @@ vector<short> archivo::getIdentaciones(){
 }
 short archivo::llenarArreglos(char car[],long fre[]){
     list<secuencia>::iterator it = secuencias.begin();
-    int frec[18];
+    int frec[19];
     int a,c,g,t,u,r,y,k,m,s,w,b,d,h,v,n,x,inc;
     a=c=g=t=u=r=y=k=m=s=w=b=d=h=v=n=x=inc=0;
     for(;it!=secuencias.end();it++){
@@ -230,6 +230,7 @@ short archivo::llenarArreglos(char car[],long fre[]){
     if(inc!=0){
         car[i]='-';
         fre[i]=inc;
+        i++;
     }
     return i;
 }

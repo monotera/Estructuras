@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     char *secuencia, *descriSecuencia, sec[200];
     char palabra[20][50];
     sistema sys;
-    
+
     while (true)
     {
         cout << "\n$ ";
@@ -43,14 +43,14 @@ int main(int argc, char *argv[])
                 strcpy(archivo, palabra[2]);
                 cout << "---CARGAR---" << endl;
                 int cantiSec = sys.cargarArchivo(archivo);
-                if(cantiSec == -1)
+                if (cantiSec == -1)
                     cout << "El archivo no se pudo abrir" << endl;
-                else if(cantiSec == 0)
-                    cout << "El archivo " << sys.getNombre()<<" esta vacio" << endl;
-                else if(cantiSec == 1)
+                else if (cantiSec == 0)
+                    cout << "El archivo " << sys.getNombre() << " esta vacio" << endl;
+                else if (cantiSec == 1)
                     cout << "1 secuencia cargada correctamente desde " << sys.getNombre() << endl;
                 else
-                    cout << cantiSec <<" secuencias cargadas correctamente desde " << sys.getNombre() << endl;
+                    cout << cantiSec << " secuencias cargadas correctamente desde " << sys.getNombre() << endl;
             }
             else
                 cout << "El numero de comandos es invalido" << endl;
@@ -59,18 +59,18 @@ int main(int argc, char *argv[])
         {
             cout << "---CONTEO---" << endl;
             int cantiSec = sys.conteo();
-            if(cantiSec == 0)
+            if (cantiSec == 0)
                 cout << "No hay secuencias cargadas en memoria" << endl;
-            else if(cantiSec == 1)
-                cout << "1 secuencia cargada en memoria "  << endl;
+            else if (cantiSec == 1)
+                cout << "1 secuencia cargada en memoria " << endl;
             else
-                cout << cantiSec <<" secuencias cargadas en memoria "<< endl;
+                cout << cantiSec << " secuencias cargadas en memoria " << endl;
         }
         else if (strcmp(comando, "listar_secuencias") == 0)
         {
             cout << "---LISTAR SECUENCIA---" << endl;
-            if(sys.listar_secuencias() == -1)
-                cout << "No hay secuencias cargadas en memoria" <<endl;
+            if (sys.listar_secuencias() == -1)
+                cout << "No hay secuencias cargadas en memoria" << endl;
         }
         else if (strcmp(comando, "histograma") == 0)
         {
@@ -81,10 +81,10 @@ int main(int argc, char *argv[])
                 strcat(descriSecuencia, palabra[2]);
                 cout << "---HISTOGRAMA---" << endl;
                 string resp = sys.histograma(descriSecuencia);
-                if(resp=="")
+                if (resp == "")
                     cout << "Secuencia invalida.\n";
                 else
-                    cout << resp;               
+                    cout << resp;
             }
             else
                 cout << "El numero de comandos es invalido" << endl;
@@ -97,12 +97,12 @@ int main(int argc, char *argv[])
                 strcpy(secuencia, palabra[2]);
                 cout << "---ES_SUBSECUENCIA---" << endl;
                 int sub = sys.esSubSecuencia(secuencia);
-                if(sys.conteo() == 0)
+                if (sys.conteo() == 0)
                     cout << "No hay secuencias cargas en memoria.\n";
-                else if(sub==0)
+                else if (sub == 0)
                     cout << "La secuencia dada no existe.\n";
                 else
-                    cout << "La secuencia dada se repite " << sub << " veces.\n";                
+                    cout << "La secuencia dada se repite " << sub << " veces.\n";
             }
             else
                 cout << "El numero de comandos es invalido" << endl;
@@ -115,13 +115,14 @@ int main(int argc, char *argv[])
                 strcpy(secuencia, palabra[2]);
                 cout << "---ENMASCARAR---" << endl;
                 int cantiSec = sys.enmascarar(secuencia);
-                if(sys.conteo() == 0){
-                    cout << "No hay secuencias cargadas en memoria." <<endl;
+                if (sys.conteo() == 0)
+                {
+                    cout << "No hay secuencias cargadas en memoria." << endl;
                 }
-                else if(cantiSec == 0)
-                    cout << "La secuencia dada no existe, por tanto no se enmascara nada." <<endl;
-                else if(cantiSec == 1)
-                    cout << "1 secuencia ha sido enmascarada."<<endl;
+                else if (cantiSec == 0)
+                    cout << "La secuencia dada no existe, por tanto no se enmascara nada." << endl;
+                else if (cantiSec == 1)
+                    cout << "1 secuencia ha sido enmascarada." << endl;
                 else
                     cout << cantiSec << " secuencias han sido enmascaradas." << endl;
             }
@@ -135,16 +136,18 @@ int main(int argc, char *argv[])
                 archivo = new char[strlen(palabra[2])];
                 strcpy(archivo, palabra[2]);
                 cout << "---GUARDAR---" << endl;
-                if(sys.conteo() == 0){
+                if (sys.conteo() == 0)
+                {
                     cout << "No hay secuencias cargadas en memoria." << endl;
                 }
-                else if (sys.guardar(archivo) == 0){
+                else if (sys.guardar(archivo) == 0)
+                {
                     cout << "Las secuncias han sido guardadas en " << archivo << ".fa" << endl;
                 }
-                else if(sys.guardar(archivo) == -1){
+                else if (sys.guardar(archivo) == -1)
+                {
                     cout << "Error guardando en " << archivo << ".fa" << endl;
                 }
-                    
             }
             else
                 cout << "El numero de comandos es invalido" << endl;
@@ -157,8 +160,26 @@ int main(int argc, char *argv[])
         {
             archivo = new char[strlen(palabra[2])];
             archivo = palabra[2];
-            if ((strstr(archivo, ".fa") != nullptr))
+            if ((strstr(archivo, ".fabin") != nullptr))
+            {
                 cout << "---Codificar (Archivo valido)---" << endl;
+                if (sys.conteo() == 0)
+                {
+                    cout << "No hay archivos cargado" << endl;
+                }
+                else
+                {
+                    string nom = archivo;
+                    if (sys.cifrar(nom))
+                    {
+                        cout << "Secuencias codificadas y almacenadas en " << nom << endl;
+                    }
+                    else
+                    {
+                        cout << "No se pueden guardar las secuencias cargadas en " << nom << endl;
+                    }
+                }
+            }
             else
                 cout << "Archivo invalido" << endl;
         }
@@ -166,8 +187,11 @@ int main(int argc, char *argv[])
         {
             archivo = new char[strlen(palabra[2])];
             archivo = palabra[2];
-            if ((strstr(archivo, ".fa") != nullptr))
+            if ((strstr(archivo, ".fabin") != nullptr))
+            {
                 cout << "---Decodificar (Archivo valido)---" << endl;
+                sys.desCifrar(archivo);
+            }
             else
                 cout << "Archivo invalido" << endl;
         }
@@ -199,64 +223,66 @@ int main(int argc, char *argv[])
         }
         else if (strcmp(comando, "ayuda") == 0)
         {
-            if(argc == 2) {
-            cout << "AYUDA \n";
-            cout << "Comandos disponibles: \n"
-                 << "cargar \t"
-                 << "conteo \t"
-                 << "listar_secuencia \t"
-                 << "histograma \n"
-                 << "es_subsecuencia \t"
-                 << "enmascarar \t"
-                 << "guardar \t"
-                 << "salir \n"
-                 << "codificar \t"
-                 << "decodificar \t"
-                 << "ruta_mas_corta \t"
-                 << "base_remota \n";
+            if (argc == 2)
+            {
+                cout << "AYUDA \n";
+                cout << "Comandos disponibles: \n"
+                     << "cargar \t"
+                     << "conteo \t"
+                     << "listar_secuencia \t"
+                     << "histograma \n"
+                     << "es_subsecuencia \t"
+                     << "enmascarar \t"
+                     << "guardar \t"
+                     << "salir \n"
+                     << "codificar \t"
+                     << "decodificar \t"
+                     << "ruta_mas_corta \t"
+                     << "base_remota \n";
 
-            cout << "\nSe incluyen los comandos ayuda de cada comando, ayuda_nombre_del_comando \n";
+                cout << "\nSe incluyen los comandos ayuda de cada comando, ayuda_nombre_del_comando \n";
 
-            cout << "ayuda cargar \t"
-                 << "ayuda conteo \t"
-                 << "ayuda listar_secuencia \t"
-                 << "ayuda histograma \n"
-                 << "ayuda es_subsecuencia \t"
-                 << "ayuda enmascarar \t"
-                 << "ayuda guardar \t"
-                 << "ayuda salir \n"
-                 << "ayuda codificar \t"
-                 << "ayuda decodificar \t"
-                 << "ayuda ruta_mas_corta\t"
-                 << "ayuda base_remota\n";
+                cout << "ayuda cargar \t"
+                     << "ayuda conteo \t"
+                     << "ayuda listar_secuencia \t"
+                     << "ayuda histograma \n"
+                     << "ayuda es_subsecuencia \t"
+                     << "ayuda enmascarar \t"
+                     << "ayuda guardar \t"
+                     << "ayuda salir \n"
+                     << "ayuda codificar \t"
+                     << "ayuda decodificar \t"
+                     << "ayuda ruta_mas_corta\t"
+                     << "ayuda base_remota\n";
             }
-            else if (argc == 3){
-                char* ayudaComando = new char [strlen(palabra[2])];
-                strcpy(ayudaComando,palabra[2]);
+            else if (argc == 3)
+            {
+                char *ayudaComando = new char[strlen(palabra[2])];
+                strcpy(ayudaComando, palabra[2]);
                 if (strcmp(ayudaComando, "cargar") == 0)
                 {
                     cout << "AYUDA CARGAR \n";
                     cout << "la manera correcta de llamar al comando cargar es: "
-                        << "cargar nombre_archivo\n";
+                         << "cargar nombre_archivo\n";
                     cout << "nombre_archivo: Nombre del archivo del que desea cargar las secuencias para subir a la memoria\n";
                 }
                 else if (strcmp(ayudaComando, "conteo") == 0)
                 {
                     cout << "AYUDA CONTEO \n";
                     cout << "la manera correcta de llamar al comando conteo es: "
-                        << "conteo";
+                         << "conteo";
                 }
                 else if (strcmp(ayudaComando, "listar_secuencias") == 0)
                 {
                     cout << "AYUDA LISTAR_SECUENCIAS \n";
                     cout << "la manera correcta de llamar al comando listar secuencias es: "
-                        << "listar_secuencia";
+                         << "listar_secuencia";
                 }
                 else if (strcmp(ayudaComando, "histograma") == 0)
                 {
                     cout << "AYUDA HISTOGRAMA \n";
                     cout << "la manera correcta de llamar al comando histograma es: "
-                        << "histograma descripcion_secuencia\n";
+                         << "histograma descripcion_secuencia\n";
                     cout << "descripcion_secuencia: Descripcion de la secuencia de la cual se desea generar el histograma(la descripcion es diferente a la secuencia en si)\n";
                 }
 
@@ -264,48 +290,48 @@ int main(int argc, char *argv[])
                 {
                     cout << "AYUDA ES_SUBSECUENCIA \n";
                     cout << "la manera correcta de llamar al comando es subsecuencia es: "
-                        << "es_subsecuencia secuencia\n";
+                         << "es_subsecuencia secuencia\n";
                     cout << "secuencia: Secuencia que desea buscar dentro de las secuencias actualmente cargadas\n";
                 }
                 else if (strcmp(ayudaComando, "enmascarar") == 0)
                 {
                     cout << "AYUDA ENMASCARAR \n";
                     cout << "la manera correcta de llamar al comando enmascarar es: "
-                        << "enmascarar secuencia\n";
+                         << "enmascarar secuencia\n";
                     cout << "secuencia: La secuencia que el usuario desea enmascarar(todos los codigos se reemplazan por X si la secuencia existe)\n";
                 }
                 else if (strcmp(ayudaComando, "guardar") == 0)
                 {
                     cout << "AYUDA GUARDAR \n";
                     cout << "la manera correcta de llamar al comando guardar es: "
-                        << "guardar nombre_archivo\n";
+                         << "guardar nombre_archivo\n";
                     cout << "nombre_archivo: Nombre del archivo donde se guardaran las secuencias cargadas en memoria\n";
                 }
                 else if (strcmp(ayudaComando, "salir") == 0)
                 {
                     cout << "AYUDA SALIR \n";
                     cout << "la manera correcta de llamar al comando salir es: "
-                        << "salir";
+                         << "salir";
                 }
                 else if (strcmp(ayudaComando, "codificar") == 0)
                 {
                     cout << "AYUDA CODIFICAR \n";
                     cout << "la manera correcta de llamar al comando codificar es: "
-                        << "codificar nombre_archivo.fabin\n";
+                         << "codificar nombre_archivo.fabin\n";
                     cout << "nombre_archivo.fabin: Nombre que se le dara al archivo binario en el que se guardara la codificacion de las secuencias.\n";
                 }
                 else if (strcmp(ayudaComando, "decodificar") == 0)
                 {
                     cout << "AYUDA DECODIFICAR \n";
                     cout << "la manera correcta de llamar al comando decodificar es: "
-                        << "decodificar nombre_archivo.fabin\n";
+                         << "decodificar nombre_archivo.fabin\n";
                     cout << "nombre_archivo.fabin: Nombre del archivo del que se cargan las secuencias a decodificar para despues ser cargadas en memoria\n";
                 }
                 else if (strcmp(ayudaComando, "ruta_mas_corta") == 0)
                 {
                     cout << "AYUDA RUTA_MAS_CORTA \n";
                     cout << "la manera correcta de llamar al comando ruta mas corta es: "
-                        << "ruta_mas_corta descirpcion_secuencia i j x y\n";
+                         << "ruta_mas_corta descirpcion_secuencia i j x y\n";
                     cout << "descripcion_secuencia: Secuencia a recorrer buscando la ruta mas corta\n";
                     cout << "i,j,x,y: Numeros enteros que representan coordenadas en el grafo. [i,j] representa la posicion inicial y [x,y] representa el destino\n";
                 }
@@ -313,15 +339,15 @@ int main(int argc, char *argv[])
                 {
                     cout << "AYUDA BASE_REMOTA \n";
                     cout << "la manera correcta de llamar al comando base remota es: "
-                        << "base_remota descripcion_secuencia i j\n";
+                         << "base_remota descripcion_secuencia i j\n";
                     cout << "descripcion_secuencia: Secuencia a recorrer buscando la base igual a la dada mas alejada\n";
                     cout << "i,j: Numeros enteros que representan la posicion de la que se tomara el dato para la comparacion\n";
                 }
                 else
-                    cout << "Error, el comando no existe" <<endl;
+                    cout << "Error, el comando no existe" << endl;
             }
         }
-        
+
         else
             cout << "comando invalido" << endl;
     }

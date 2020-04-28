@@ -112,6 +112,21 @@ string HuffmanArbol::desCifrar(string sec, long longiSec)
     }
     return desCifrado;
 }
-void HuffmanArbol::limpiar(){
-    this->raiz = NULL;
+HuffmanNodo * HuffmanArbol::getRaiz(){
+    return this->raiz;
+}
+HuffmanNodo * HuffmanArbol::deCodificar(HuffmanNodo *nodo, char dir, int &cont, string &des)
+{
+    if(nodo->esHoja()){
+        des+= nodo->obtenerDato();
+        nodo = this->raiz;
+        cont++;
+    }
+    if(dir == '1'){
+        nodo = nodo->obtenerHijoDer();
+    }
+    else if(dir == '0'){
+        nodo = nodo->obtenerHijoIzq();
+    }
+    return nodo;
 }

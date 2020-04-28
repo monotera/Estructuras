@@ -23,7 +23,7 @@ public:
     string getNombre();
     int esSubSecuencia(string sub);
     string histograma(string desc);
-    bool cifrar();
+    bool cifrar(string);
     bool desCifrar(string nombre);
     struct datosBin;
     void llenarStruct(datosBin &datos);

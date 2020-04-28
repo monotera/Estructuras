@@ -6,6 +6,7 @@
 #include <algorithm>
 #include "archivo.h"
 #include "sistema.h"
+#include <bitset>
 
 using namespace std;
 
@@ -98,14 +99,15 @@ struct sistema::datosBin
     vector<long> longiSec;
     vector<short> identacion;
     vector<string> binary_code;
+    vector<string> secu;
 };
 
-bool sistema::cifrar()
+bool sistema::cifrar(string nombreF)
 {
     bool resp = false;
     ofstream file;
     datosBin dat;
-    file.open("pru.bin", ios::out | ios::binary);
+    file.open(nombreF, ios::out | ios::binary);
     if (file.is_open())
     {
         llenarStruct(dat);
@@ -120,13 +122,60 @@ bool sistema::cifrar()
         for (int i = 0; i < dat.cantiSecuencias; i++)
         {
             file.write((char *)&dat.TamNombreSec[i], sizeof(short));
-            //for (int j = 0; j < dat.TamNombreSec[i]; j++)
-            //{
-            //file.write((char *)&dat.nombreSec[i][j], sizeof(char));
-            // }
+            vector<char> aux = dat.nombreSec[i];
+            for (int j = 0; j < dat.TamNombreSec[i]; j++)
+            {
+                file.write((char *)&aux[j], sizeof(char));
+            }
             file.write((char *)&dat.longiSec[i], sizeof(long));
             file.write((char *)&dat.identacion[i], sizeof(short));
-            file.write((char *)&dat.binary_code[i], sizeof(string));
+            //----------------------------------------------------------------------
+            string cod = dat.binary_code[i];
+            cout << cod<<endl<<"-----------------------------------------------------"<<endl;;
+            int z = 0;
+            while (z < cod.size())
+            {
+                char t = 0;
+                for (int l = 0; l < 8; l++)
+                {
+                    if (cod[z] == '1')
+                    {
+                        t += 1 << (7 - l);
+                    }
+                    z++;
+                }
+                for (int i = 7; i >= 0; --i)
+                {
+                    std::cout << ((t >> i) & 0x1);
+                }
+                cout <<"    ";
+                file.write((char *)&t, sizeof(char));
+            }
+            cout << endl<<"---------------------------------------------------------------------" <<endl;
+        }
+        cout << "asd" << endl;
+        cout << "Cnati caracter: " << dat.cantiBases << endl
+             << "canti Bases: " << dat.caracterBase.size() << endl
+             << "canti frq " << dat.frecuenciaBase.size() << endl
+             << "cant sec " << dat.cantiSecuencias << endl
+             << "canti tamn: " << dat.TamNombreSec.size() << endl
+             << "cantinombres: " << dat.nombreSec.size() << endl
+             << "cantilongi " << dat.longiSec.size() << endl
+             << "cantiIden: " << dat.identacion.size() << endl;
+        for (int i = 0; i < dat.cantiSecuencias; ++i)
+        {
+            vector<char> g = dat.nombreSec[i];
+            cout << "/nNombre: ";
+            for (int j = 0; j < dat.TamNombreSec[i]; j++)
+            {
+                cout << g[j];
+            }
+            cout << endl;
+            cout << "nombreTam: " << dat.TamNombreSec[i] << endl;
+            cout << "Longitud sec: " << dat.longiSec[i] << endl
+                 << "Identacion: " << dat.identacion[i] << endl;
+            cout << "secuencia: " << arbolHuff.desCifrar(dat.binary_code[i], dat.longiSec[i]) << endl;
+            ;
         }
 
         file.close();
@@ -134,14 +183,15 @@ bool sistema::cifrar()
     }
     return resp;
 }
-bool sistema::desCifrar(string nombre)
+bool sistema::desCifrar(string nombreF)
 {
     cout << "Archivo--------------------------" << endl;
     bool res = false;
     datosBin datEx;
-    ifstream newArchivo("pru.bin", ios::out | ios::binary);
+    ifstream newArchivo(nombreF, ios::out | ios::binary);
     if (newArchivo.is_open())
     {
+        res = true;
         newArchivo.read((char *)&datEx.cantiBases, sizeof(short));
         for (int i = 0; i < datEx.cantiBases; ++i)
         {
@@ -150,38 +200,83 @@ bool sistema::desCifrar(string nombre)
             newArchivo.read((char *)&datEx.caracterBase[i], sizeof(char));
             newArchivo.read((char *)&datEx.frecuenciaBase[i], sizeof(long));
         }
+        datEx.caracterBase.size();
         newArchivo.read((char *)&datEx.cantiSecuencias, sizeof(int));
         cout << "Bases: " << datEx.cantiBases << " sec:" << datEx.cantiSecuencias << endl;
+        char *arr = new char[datEx.cantiBases];
+        long *freq = new long[datEx.cantiBases];
         for (int i = 0; i < datEx.cantiBases; ++i)
         {
             cout << datEx.caracterBase[i] << " " << datEx.frecuenciaBase[i] << ", ";
+            arr[i] = datEx.caracterBase[i];
+            freq[i] = datEx.frecuenciaBase[i];
         }
         cout << endl;
-        datEx.TamNombreSec.reserve(datEx.cantiSecuencias);
+        arbolHuff.generarArbol(arr, freq, datEx.cantiBases);
         datEx.nombreSec.reserve(datEx.cantiSecuencias);
-        datEx.longiSec.reserve(datEx.cantiSecuencias);
-        datEx.identacion.reserve(datEx.cantiSecuencias);
-        datEx.binary_code.reserve(datEx.cantiSecuencias);
         for (int i = 0; i < datEx.cantiSecuencias; i++)
         {
+            datEx.TamNombreSec.push_back(0);
             newArchivo.read((char *)&datEx.TamNombreSec[i], sizeof(short));
-            cout << datEx.TamNombreSec[i] << endl;
-            //datEx.nombreSec[i].reserve(datEx.TamNombreSec[i]);
-            //for (int j = 0; j < datEx.TamNombreSec[i]; j++){
-            //newArchivo.read((char *)&datEx.nombreSec[i][j], sizeof(char));
-            //cout << datEx.nombreSec[i][j];
-            //}
+            cout << "TamNombre: " << datEx.TamNombreSec[i] << endl;
+            vector<char> aux;
+            char nombreC;
+            aux.reserve(datEx.TamNombreSec[i]);
+            for (int j = 0; j < datEx.TamNombreSec[i]; j++)
+            {
+                newArchivo.read((char *)&nombreC, sizeof(char));
+                aux.push_back(nombreC);
+            }
+            cout << endl;
+            datEx.nombreSec.push_back(aux);
+            cout << datEx.nombreSec[i].size() << endl;
+            datEx.longiSec.push_back(0);
             newArchivo.read((char *)&datEx.longiSec[i], sizeof(long));
             cout << "longi: " << datEx.longiSec[i] << endl;
+            datEx.identacion.push_back(0);
             newArchivo.read((char *)&datEx.identacion[i], sizeof(short));
             cout << "ide: " << datEx.identacion[i] << endl;
-            newArchivo.read((char *)&datEx.binary_code[i], sizeof(string));
-            cout << "Binary: " << datEx.binary_code[i] << endl;
+            char dir;
+            int l = 0;
+            char y;
+            vector<char> q;
+            bitset<8> uno(1);
+            bitset<8> cero(0);
+            HuffmanNodo *nodo = arbolHuff.getRaiz();
+            int cantiPal = 0;
+            string secI = "";
+            bool fin = false;
+            while (!fin)
+            {
+                newArchivo.read((char *)&y, sizeof(char));
+                for (int j = 0; j < 8 && !fin; j++)
+                {
+                    q.push_back(y >> 7 - j);
+                    bitset<8> we((q[l] >> 0) & 0x1);
+                    if (we == uno)
+                    {
+                        dir = '1';
+                    }
+                    else if (we == cero)
+                    {
+                        dir = '0';
+                    }
+                    //cout << dir << endl;
+                    nodo = arbolHuff.deCodificar(nodo, dir, cantiPal, secI);
+                    if (cantiPal == datEx.longiSec[i])
+                    {
+                        fin = true;
+                    }
+                    l++;
+                }
+            }
+            cout << "Sec: " << secI << endl;
+            datEx.secu.push_back(secI);
         }
-        crearFa(datEx);
-        newArchivo.close();
     }
-    
+    crearFa(datEx);
+    newArchivo.close();
+
     return res;
 }
 void sistema::llenarStruct(datosBin &dat)
@@ -216,7 +311,6 @@ void sistema::llenarStruct(datosBin &dat)
         {
             nombreV.push_back(nombre[j]);
         }
-        cout << endl;
         dat.nombreSec.push_back(nombreV);
         dat.longiSec.push_back(tamaSec);
         string binCod = arbolHuff.cifrar(secLinea[i]);
@@ -226,12 +320,12 @@ void sistema::llenarStruct(datosBin &dat)
 bool sistema::crearFa(datosBin dat)
 {
     bool res = false;
-    /*ofstream newFile;
-    newFile.open("borrarasdxz.fa", ios::out);
+    ofstream newFile;
+    newFile.open("borrar.fa", ios::out);
     if (newFile.is_open())
     {
         res = true;
-        cout <<"Crear----------------------"<<endl;
+        cout << "Crear----------------------" << endl;
         char *arr = new char[dat.cantiBases];
         long *freq = new long[dat.cantiBases];
         for (int i = 0; i < dat.cantiBases; ++i)
@@ -250,7 +344,7 @@ bool sistema::crearFa(datosBin dat)
             {
                 newFile << nombre[j];
             }
-            string desC = arbolHuff.desCifrar(dat.binary_code[i], dat.longiSec[i]);
+            string desC = dat.secu[i];
             int k = 0;
             newFile << endl;
             for (int j = 0; j < dat.longiSec[i]; j++, k++)
@@ -265,6 +359,8 @@ bool sistema::crearFa(datosBin dat)
             newFile << endl;
         }
         newFile.close();
-    }*/
+        cargarArchivo("borrar.fa");
+        remove("borrar.fa");
+    }
     return res;
 }

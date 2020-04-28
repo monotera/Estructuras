@@ -21,7 +21,8 @@ public:
     string obtenerCodigo(char caracter);
     string cifrar(string secunecia);
     string desCifrar(string cif, long longiSec);
-    void limpiar();
+    HuffmanNodo * deCodificar(HuffmanNodo *nodo, char dir, int &cont, string &des);
+    HuffmanNodo * getRaiz();
 };
 
 
