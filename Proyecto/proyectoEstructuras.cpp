@@ -141,11 +141,11 @@ int main(int argc, char *argv[])
                 }
                 else if (sys.guardar(archivo) == 0)
                 {
-                    cout << "Las secuncias han sido guardadas en " << archivo << ".fa" << endl;
+                    cout << "Las secuncias han sido guardadas en " << archivo  << endl;
                 }
                 else if (sys.guardar(archivo) == -1)
                 {
-                    cout << "Error guardando en " << archivo << ".fa" << endl;
+                    cout << "Error guardando en " << archivo << endl;
                 }
             }
             else
