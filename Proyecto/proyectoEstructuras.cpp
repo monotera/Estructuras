@@ -77,7 +77,6 @@ int main(int argc, char *argv[])
             if (argc == 3)
             {
                 descriSecuencia = new char[strlen(palabra[2])];
-                //strcpy(descriSecuencia, ">");
                 strcpy(descriSecuencia, palabra[2]);
                 cout << "---HISTOGRAMA---" << endl;
                 string resp = sys.histograma(descriSecuencia);
