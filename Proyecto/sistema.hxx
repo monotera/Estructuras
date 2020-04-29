@@ -107,6 +107,7 @@ bool sistema::cifrar(string nombreF)
     bool resp = false;
     ofstream file;
     datosBin dat;
+    int contador = 0;
     file.open(nombreF, ios::out | ios::binary);
     if (file.is_open())
     {
@@ -148,9 +149,13 @@ bool sistema::cifrar(string nombreF)
                 {
                     std::cout << ((t >> i) & 0x1);
                 }
+                contador++;
                 cout <<"    ";
                 file.write((char *)&t, sizeof(char));
             }
+            cout << "\ncanti caracteres: "<< contador <<endl;
+            contador = 0;
+
             cout << endl<<"---------------------------------------------------------------------" <<endl;
         }
         cout << "asd" << endl;

@@ -189,7 +189,13 @@ int main(int argc, char *argv[])
             if ((strstr(archivo, ".fabin") != nullptr))
             {
                 cout << "---Decodificar (Archivo valido)---" << endl;
-                if(sys.desCifrar(archivo));
+                string nom = archivo;
+                if(!sys.desCifrar(nom)){
+                    cout << " No se pueden cargar las secuencias en "<< nom <<endl;
+                }
+                else{
+                    cout << "Secuencias decodificadas desde "<< nom <<" y cargadas en memoria.";
+                }
             }
             else
                 cout << "Archivo invalido" << endl;
