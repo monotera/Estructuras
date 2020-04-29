@@ -77,8 +77,8 @@ int main(int argc, char *argv[])
             if (argc == 3)
             {
                 descriSecuencia = new char[strlen(palabra[2])];
-                strcpy(descriSecuencia, ">");
-                strcat(descriSecuencia, palabra[2]);
+                //strcpy(descriSecuencia, ">");
+                strcpy(descriSecuencia, palabra[2]);
                 cout << "---HISTOGRAMA---" << endl;
                 string resp = sys.histograma(descriSecuencia);
                 if (resp == "")
@@ -190,7 +190,7 @@ int main(int argc, char *argv[])
             if ((strstr(archivo, ".fabin") != nullptr))
             {
                 cout << "---Decodificar (Archivo valido)---" << endl;
-                sys.desCifrar(archivo);
+                if(sys.desCifrar(archivo));
             }
             else
                 cout << "Archivo invalido" << endl;
