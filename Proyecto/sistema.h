@@ -5,6 +5,7 @@
 #include <list>
 #include<string>
 #include "archivo.h"
+#include "HuffmanArbol.h"
 
 using namespace std;
 
@@ -12,6 +13,7 @@ class sistema
 {
 private:
    archivo arch;
+   HuffmanArbol arbolHuff;
 public:
     int cargarArchivo(string nombre);
     int conteo();
@@ -21,6 +23,11 @@ public:
     string getNombre();
     int esSubSecuencia(string sub);
     string histograma(string desc);
+    bool cifrar(string);
+    bool desCifrar(string nombre);
+    struct datosBin;
+    void llenarStruct(datosBin &datos);
+    bool crearFa(datosBin dat);
 };
 
 
