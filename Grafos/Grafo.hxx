@@ -1,4 +1,5 @@
 #include <iostream>
+#include <queue>
 
 template <class T, class C>
 int Grafo<T, C>::cantiVertices()
@@ -92,7 +93,7 @@ void Grafo<T, C>::eliminarVertice(T vertice)
                     aux->erase(aux->begin() + j);
                 }
             }
-           // eliminarArista(vertice,vertices[i]);
+            // eliminarArista(vertice,vertices[i]);
         }
         vertices.erase(vertices.begin() + ver);
         numVertices = vertices.size();
@@ -106,7 +107,7 @@ void Grafo<T, C>::eliminarArista(T origen, T destino)
     ll des = buscarVertice(destino);
     if (ori != -1 && des != -1)
     {
-        
+
         ll ariIn = buscarArista(ori, des);
         if (ariIn != -1)
         {
@@ -125,20 +126,72 @@ void Grafo<T, C>::recorridoPlano()
     cout << endl;
 }
 template <class T, class C>
-void Grafo<T, C>::prueba()
+void Grafo<T, C>::imprimirGrafo()
 {
     cout << endl;
     for (int i = 0; i < vertices.size(); ++i)
     {
         cout << vertices[i] << "-> ";
-        vector<pair<ll,C>> aux = aristas[i];
+        vector<pair<ll, C>> aux = aristas[i];
         for (int j = 0; j < aux.size(); j++)
         {
-            pair<ll,C> temp = aux[j];
-            cout << temp.first << " " << temp.second <<", ";
+            pair<ll, C> temp = aux[j];
+            cout << vertices[temp.first] << " " << temp.first << " " << temp.second << ", ";
         }
         cout << endl;
-        
     }
     cout << endl;
+}
+template <class T, class C>
+void Grafo<T, C>::recorridoDFS(T inicio)
+{
+    bool visitados[vertices.size()] = {0};
+    ll in = buscarVertice(inicio);
+    if (in != -1)
+        recorridoDFS(in, visitados);
+    else
+        cout << "El dato no existe" << endl;
+}
+template <class T, class C>
+void Grafo<T, C>::recorridoDFS(ll nodo, bool *visitados)
+{
+    visitados[nodo] = true;
+    cout << vertices[nodo] << ", ";
+    vector<pair<ll, C>> aux = aristas[nodo];
+    for (int i = 0; i < aux.size(); ++i)
+    {
+        pair<ll, C> temp = aux[i];
+        if (!visitados[temp.first])
+            recorridoDFS(temp.first, visitados);
+    }
+}
+template <class T, class C>
+void Grafo<T, C>::recorridoBFS(T inicio)
+{
+    bool visitados[vertices.size()] = {0};
+    ll nodo = buscarVertice(inicio);
+    queue<ll> colaV;
+    colaV.push(nodo);
+    if (nodo != -1)
+    {
+        while (!colaV.empty())
+        {
+            nodo = colaV.front();
+            colaV.pop();
+
+            if (!visitados[nodo])
+            {
+                cout << vertices[nodo] << ", ";
+                visitados[nodo] = true;
+                vector<pair<ll, C>> aux = aristas[nodo];
+                for (int i = 0; i < aux.size(); ++i)
+                {
+                    pair<ll, C> temp = aux[i];
+                    colaV.push(temp.first);
+                }
+            }
+        }
+    }
+    else
+        cout << "El dato no existe" << endl;
 }

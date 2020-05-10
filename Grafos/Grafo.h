@@ -26,7 +26,10 @@ public:
     void eliminarVertice(T vertice);
     void eliminarArista(T origen, T destino);
     void recorridoPlano();
-    void prueba();
+    void imprimirGrafo();
+    void recorridoDFS(T inicio);
+    void recorridoDFS(ll inicio, bool *visitados);
+    void recorridoBFS(T inicio);
 };
 
 #include "Grafo.hxx"
