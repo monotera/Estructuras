@@ -1,5 +1,6 @@
 #include <iostream>
 #include <queue>
+#include <algorithm>
 
 template <class T, class C>
 int GrafoM<T, C>::cantiVertices()
@@ -184,4 +185,153 @@ void GrafoM<T, C>::recorridoBFS(T inicio)
     }
     else
         cout << "El dato no existe" << endl;
+}
+template <class T, class C>
+void GrafoM<T, C>::prim(T inicio)
+{
+    vector<T> nuevosV;
+    nuevosV.push_back(inicio);
+    vector<C> nuevasA;
+    vector<pair<int, int>> listaMenores;
+    menorPeso(listaMenores);
+    int in = 0;
+    bool ori = false, des = false;
+    while (nuevosV.size() != numVertices && !ori)
+    {
+        pair<int, int> aux = listaMenores[in];
+        for (int j = 0; j < nuevosV.size() && !des; ++j)
+        {
+            if (vertices[aux.first] == nuevosV[j])
+            {
+                ori = true;
+            }
+            if (vertices[aux.second] == nuevosV[j])
+            {
+                des = true;
+            }
+        }
+        if (ori && !des)
+        {
+            nuevosV.push_back(vertices[aux.second]);
+            listaMenores.erase(listaMenores.begin() + in);
+            in = -1;
+            nuevasA.push_back(matAristas[aux.first][aux.second]);
+        }
+        in++;
+        des = false;
+        ori = false;
+    }
+    cout << endl;
+    for (int i = 0; i < nuevosV.size(); ++i)
+    {
+        cout << nuevosV[i] << ", ";
+    }
+    cout << endl;
+    for (int i = 0; i < nuevasA.size(); ++i)
+    {
+        cout << nuevasA[i] << ", ";
+    }
+}
+template <class T, class C>
+void GrafoM<T, C>::menorPeso(vector<pair<int, int>> &vistos)
+{
+    pair<int, int> aux;
+    vector<C> temp;
+    C menorPeso = 100000;
+    bool existe = false;
+    int cantiA = cantiAristas();
+    while (vistos.size() != cantiA)
+    {
+        for (int i = 0; i < numVertices; i++)
+        {
+            temp = matAristas[i];
+            for (int j = 0; j < numVertices; j++)
+            {
+
+                if (temp[j] != 0)
+                {
+                    if (temp[j] <= menorPeso)
+                    {
+                        for (int k = 0; k < vistos.size(); k++)
+                        {
+                            pair<int, int> aux2 = vistos[k];
+                            if (aux2.first == i && aux2.second == j)
+                            {
+                                existe = true;
+                            }
+                        }
+                        if (!existe)
+                        {
+                            menorPeso = matAristas[i][j];
+                            aux.first = i;
+                            aux.second = j;
+                        }
+                    }
+                    existe = false;
+                }
+            }
+        }
+        vistos.push_back(aux);
+        menorPeso = 100000;
+    }
+}
+template <class T, class C>
+void GrafoM<T, C>::dijkstra(T inicio)
+{
+    vector<C> dist;
+    vector<T> pred;
+    vector<T> q = vertices;
+    vector<T> s;
+    for (int i = 0; i < numVertices; i++)
+    {
+        dist.push_back(100000);
+        pred.push_back(0);
+    }
+    pred[0] = inicio;
+    dist[0] = 0;
+    while (!q.empty())
+    {
+        int menor = 100001;
+        int ori;
+        for (int i = 0; i < dist.size(); i++)
+        {
+            if(find(s.begin(),s.end(),vertices[i]) == s.end())
+            {                
+                if(dist[i] < menor){
+                    menor = dist[i];
+                    ori = i;
+                }
+            }
+        }
+        s.push_back(vertices[ori]);
+        int indice = 0;
+        for (int i = 0; i < q.size(); i++)
+        {
+            if (q[i] == menor)
+            {
+                indice = i;
+            }
+        }
+        q.erase(q.begin() + indice);
+        vector<C> temp = matAristas[ori];
+        for (int i = 0; i < numVertices; i++)
+        {
+            if (temp[i] != 0)
+            {
+                if (dist[i] > (dist[ori] + matAristas[ori][i]))
+                {
+                    dist[i] = dist[ori] + matAristas[ori][i];
+                    pred[i] = vertices[ori];
+                }
+            }
+        }
+    }
+    cout << endl;
+    for (int i = 0; i < s.size(); i++){
+        cout << s[i]<<" ";
+    }
+    cout <<endl;
+    for(int i = 0; i < numVertices; ++i){
+        cout << dist[i] << " " <<pred[i] << endl;
+    }
 }

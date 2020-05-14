@@ -30,6 +30,9 @@ public:
     void recorridoDFS(T inicio);
     void recorridoDFS(ll inicio, bool *visitados);
     void recorridoBFS(T inicio);
+    void prim(T inicio);
+    void menorPeso(vector<pair<int,int>> &vistos);
+    void dijkstra(T inicio);
 };
 
 #include "GrafoM.hxx"
