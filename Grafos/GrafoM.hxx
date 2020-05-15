@@ -187,12 +187,12 @@ void GrafoM<T, C>::recorridoBFS(T inicio)
         cout << "El dato no existe" << endl;
 }
 template <class T, class C>
-void GrafoM<T, C>::prim(T inicio)
+void GrafoM<T, C>::prim(T inicio,vector<T> &nuevosV, vector<T> &pred,  vector<C> &nuevasA)
 {
-    vector<T> nuevosV;
-    nuevosV.push_back(inicio);
-    vector<C> nuevasA;
     vector<pair<int, int>> listaMenores;
+    nuevosV.push_back(inicio);
+    pred.push_back(inicio);
+    nuevasA.push_back(0);
     menorPeso(listaMenores);
     int in = 0;
     bool ori = false, des = false;
@@ -213,6 +213,7 @@ void GrafoM<T, C>::prim(T inicio)
         if (ori && !des)
         {
             nuevosV.push_back(vertices[aux.second]);
+            pred.push_back(vertices[aux.first]);
             listaMenores.erase(listaMenores.begin() + in);
             in = -1;
             nuevasA.push_back(matAristas[aux.first][aux.second]);
@@ -220,16 +221,6 @@ void GrafoM<T, C>::prim(T inicio)
         in++;
         des = false;
         ori = false;
-    }
-    cout << endl;
-    for (int i = 0; i < nuevosV.size(); ++i)
-    {
-        cout << nuevosV[i] << ", ";
-    }
-    cout << endl;
-    for (int i = 0; i < nuevasA.size(); ++i)
-    {
-        cout << nuevasA[i] << ", ";
     }
 }
 template <class T, class C>
@@ -276,12 +267,9 @@ void GrafoM<T, C>::menorPeso(vector<pair<int, int>> &vistos)
     }
 }
 template <class T, class C>
-void GrafoM<T, C>::dijkstra(T inicio)
+void GrafoM<T, C>::dijkstra(T inicio, vector<T> &s, vector<T> &pred,  vector<C> &dist)
 {
-    vector<C> dist;
-    vector<T> pred;
     vector<T> q = vertices;
-    vector<T> s;
     for (int i = 0; i < numVertices; i++)
     {
         dist.push_back(100000);
@@ -325,13 +313,5 @@ void GrafoM<T, C>::dijkstra(T inicio)
                 }
             }
         }
-    }
-    cout << endl;
-    for (int i = 0; i < s.size(); i++){
-        cout << s[i]<<" ";
-    }
-    cout <<endl;
-    for(int i = 0; i < numVertices; ++i){
-        cout << dist[i] << " " <<pred[i] << endl;
     }
 }
