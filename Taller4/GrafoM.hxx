@@ -3,6 +3,12 @@
 #include <algorithm>
 
 template <class T, class C>
+C GrafoM<T, C>::obtenerCosto(unsigned long i, unsigned long j)
+{
+    return matAristas[i][j];
+}
+
+template <class T, class C>
 int GrafoM<T, C>::cantiVertices()
 {
     return this->numVertices;
@@ -41,10 +47,24 @@ void GrafoM<T, C>::insertarVertice(T vertice)
     }
 }
 template <class T, class C>
-void GrafoM<T, C>::insertarArista(T origen, T destino, C peso)
+ll GrafoM<T, C>::buscarVertice(T vertice)
 {
-    ll indOr = buscarVertice(origen);
-    ll inDes = buscarVertice(destino);
+    ll indice = -1;
+    for (int i = 0; i < numVertices && indice == -1; i++)
+    {
+        if (vertice.X == vertices[i].X && vertice.Y == vertices[i].Y)
+            indice = i;
+    }
+    return indice;
+}
+template <class T, class C>
+T GrafoM<T, C>::obtenerVertice(ll indice)
+{
+    return vertices[indice];
+}
+template <class T, class C>
+void GrafoM<T, C>::insertarArista(ll indOr, ll inDes, C peso)
+{
     if (indOr != -1 && inDes != -1)
     {
         if (!buscarArista(indOr, inDes))
@@ -52,17 +72,6 @@ void GrafoM<T, C>::insertarArista(T origen, T destino, C peso)
             matAristas[indOr][inDes] = peso;
         }
     }
-}
-template <class T, class C>
-ll GrafoM<T, C>::buscarVertice(T vertice)
-{
-    ll indice = -1;
-    for (int i = 0; i < numVertices && indice == -1; i++)
-    {
-        if (vertice == vertices[i])
-            indice = i;
-    }
-    return indice;
 }
 template <class T, class C>
 bool GrafoM<T, C>::buscarArista(ll origen, ll destino)
@@ -75,137 +84,64 @@ bool GrafoM<T, C>::buscarArista(ll origen, ll destino)
     return encontrado;
 }
 template <class T, class C>
-void GrafoM<T, C>::imprimirGrafo()
+void GrafoM<T, C>::generarCaminos(vector<T> &nuevosV, vector<T> &pred, vector<C> &nuevasA, vector<vector<unsigned long>> &caminos)
 {
-    cout << endl;
-    cout << "    ";
-    for (int i = 0; i < numVertices; i++)
+    vector<ll> indicesV;
+    vector<unsigned long> camino;
+    bool encontrado = false;
+    for (int i = 0; i < nuevosV.size(); i++)
     {
-        cout << vertices[i] << " ";
+        indicesV.push_back(buscarVertice(nuevosV[i]));
     }
-    cout << endl;
-    for (int i = 0; i < numVertices; ++i)
+    for (int i = 0; i < nuevosV.size(); i++)
     {
-        cout << vertices[i] << "-> ";
-        for (int j = 0; j < numVertices; j++)
+        camino.clear();
+        int indice = i;
+        camino.push_back(i);
+        while (indice != 0)
         {
-            cout << matAristas[i][j] << " ";
-        }
-        cout << endl;
-    }
-    cout << endl;
-}
-template <class T, class C>
-void GrafoM<T, C>::recorridoPlano()
-{
-    for (int i = 0; i < vertices.size(); i++)
-    {
-        cout << vertices[i] << ", ";
-    }
-    cout << endl;
-}
-template <class T, class C>
-void GrafoM<T, C>::eliminarVertice(T vertice)
-{
-    ll ver = buscarVertice(vertice);
-    if (ver != -1)
-    {
-        vertices.erase(vertices.begin() + ver);
-        numVertices = vertices.size();
-        vector<C> *aux = &matAristas[ver];
-        aux->clear();
-        matAristas.erase(matAristas.begin() + ver);
-        for (int i = 0; i < numVertices; i++)
-        {
-            aux = &matAristas[i];
-            aux->erase(aux->begin() + ver);
-        }
-    }
-}
-template <class T, class C>
-void GrafoM<T, C>::eliminarArista(T origen, T destino)
-{
-    ll ori = buscarVertice(origen);
-    ll des = buscarVertice(destino);
-    if (ori != -1 && des != -1)
-    {
-        if (buscarArista(ori, des))
-        {
-            matAristas[ori][des] = 0;
-        }
-    }
-}
-template <class T, class C>
-void GrafoM<T, C>::recorridoDFS(T inicio)
-{
-    bool visitados[vertices.size()] = {0};
-    ll in = buscarVertice(inicio);
-    if (in != -1)
-        recorridoDFS(in, visitados);
-    else
-        cout << "El dato no existe" << endl;
-}
-template <class T, class C>
-void GrafoM<T, C>::recorridoDFS(ll nodo, bool *visitados)
-{
-    visitados[nodo] = true;
-    cout << vertices[nodo] << ", ";
-    vector<C> aux = matAristas[nodo];
-    for (int i = 0; i < aux.size(); ++i)
-    {
-        if (!visitados[i] && aux[i] != 0)
-            recorridoDFS(i, visitados);
-    }
-}
-template <class T, class C>
-void GrafoM<T, C>::recorridoBFS(T inicio)
-{
-    bool visitados[vertices.size()] = {0};
-    ll nodo = buscarVertice(inicio);
-    queue<ll> colaV;
-    colaV.push(nodo);
-    if (nodo != -1)
-    {
-        while (!colaV.empty())
-        {
-            nodo = colaV.front();
-            colaV.pop();
-            if (!visitados[nodo])
+            int aux = -1;
+
+            for (int j = 0; j < nuevosV.size() && !encontrado; j++)
             {
-                cout << vertices[nodo] << ", ";
-                visitados[nodo] = true;
-                vector<C> aux = matAristas[nodo];
-                for (int i = 0; i < aux.size(); ++i)
+                if (indice == indicesV[j])
                 {
-                    if (aux[i] != 0)
-                        colaV.push(i);
+                    encontrado = true;
+                    aux = j;
                 }
             }
+            indice = buscarVertice(pred[aux]);
+            camino.push_back(indice);
+            encontrado = false;
         }
+        caminos.push_back(camino);
     }
-    else
-        cout << "El dato no existe" << endl;
 }
 template <class T, class C>
-void GrafoM<T, C>::prim(T inicio,vector<T> &nuevosV, vector<T> &pred,  vector<C> &nuevasA)
+vector<vector<unsigned long>> GrafoM<T, C>::prim(ll inicio)
 {
+    vector<T> nuevosV;
+    vector<T> pred;
+    vector<C> nuevasA;
     vector<pair<int, int>> listaMenores;
-    nuevosV.push_back(inicio);
-    pred.push_back(inicio);
+    vector<vector<unsigned long>> caminos;
+    nuevosV.push_back(vertices[inicio]);
+    pred.push_back(vertices[inicio]);
     nuevasA.push_back(0);
     menorPeso(listaMenores);
     int in = 0;
     bool ori = false, des = false;
-    while (nuevosV.size() != numVertices && !ori)
+
+    while (nuevosV.size() != numVertices)
     {
         pair<int, int> aux = listaMenores[in];
         for (int j = 0; j < nuevosV.size() && !des; ++j)
         {
-            if (vertices[aux.first] == nuevosV[j])
+            if (vertices[aux.first].X == nuevosV[j].X && vertices[aux.first].Y == nuevosV[j].Y)
             {
                 ori = true;
             }
-            if (vertices[aux.second] == nuevosV[j])
+            if (vertices[aux.second].X == nuevosV[j].X && vertices[aux.second].Y == nuevosV[j].Y)
             {
                 des = true;
             }
@@ -222,6 +158,8 @@ void GrafoM<T, C>::prim(T inicio,vector<T> &nuevosV, vector<T> &pred,  vector<C>
         des = false;
         ori = false;
     }
+    generarCaminos(nuevosV, pred, nuevasA, caminos);
+    return caminos;
 }
 template <class T, class C>
 void GrafoM<T, C>::menorPeso(vector<pair<int, int>> &vistos)
@@ -267,35 +205,49 @@ void GrafoM<T, C>::menorPeso(vector<pair<int, int>> &vistos)
     }
 }
 template <class T, class C>
-void GrafoM<T, C>::dijkstra(T inicio, vector<T> &s, vector<T> &pred,  vector<C> &dist)
+vector<vector<unsigned long>> GrafoM<T, C>::dijkstra(ll inicio)
 {
+    vector<T> s;
+    vector<T> pred;
+    vector<C> dist;
+    vector<vector<unsigned long>> caminos;
     vector<T> q = vertices;
     for (int i = 0; i < numVertices; i++)
     {
         dist.push_back(100000);
-        pred.push_back(0);
     }
-    pred[0] = inicio;
+    pred.resize(numVertices);
+    pred[0] = obtenerVertice(inicio);
     dist[0] = 0;
+    bool encontrado = false;
     while (!q.empty())
     {
         int menor = 100001;
         int ori;
         for (int i = 0; i < dist.size(); i++)
         {
-            if(find(s.begin(),s.end(),vertices[i]) == s.end())
-            {                
-                if(dist[i] < menor){
+            for (int k = 0; k < s.size() && !encontrado; ++k)
+            {
+                if (s[k].X == vertices[i].X && s[k].Y == vertices[i].Y)
+                {
+                    encontrado = true;
+                }
+            }
+            if (!encontrado)
+            {
+                if (dist[i] < menor)
+                {
                     menor = dist[i];
                     ori = i;
                 }
             }
+            encontrado = false;
         }
         s.push_back(vertices[ori]);
         int indice = 0;
         for (int i = 0; i < q.size(); i++)
         {
-            if (q[i] == menor)
+            if (q[i].X == vertices[ori].X && q[i].Y == vertices[ori].Y)
             {
                 indice = i;
             }
@@ -314,4 +266,6 @@ void GrafoM<T, C>::dijkstra(T inicio, vector<T> &s, vector<T> &pred,  vector<C> 
             }
         }
     }
+    generarCaminos(vertices, pred, dist, caminos);
+    return caminos;
 }

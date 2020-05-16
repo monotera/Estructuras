@@ -17,23 +17,23 @@ int main()
     g.insertarVertice(5);
     g.insertarVertice(6);
     g.insertarVertice(7);
-    g.insertarArista(0,1,5);
-    g.insertarArista(0,7,8);
-    g.insertarArista(0,4,9);
-    g.insertarArista(1,3,15);
-    g.insertarArista(1,2,12);
-    g.insertarArista(1,7,4);
-    g.insertarArista(2,3,3);
-    g.insertarArista(2,6,11);
-    g.insertarArista(3,6,9);
-    g.insertarArista(4,7,5);
-    g.insertarArista(4,5,4);
-    g.insertarArista(4,6,20);
-    g.insertarArista(5,2,1);
-    g.insertarArista(5,6,13);
-    g.insertarArista(7,2,7);
-    g.insertarArista(7,5,6);
-    
+    g.insertarArista(0, 1, 5);
+    g.insertarArista(0, 7, 8);
+    g.insertarArista(0, 4, 9);
+    g.insertarArista(1, 3, 15);
+    g.insertarArista(1, 2, 12);
+    g.insertarArista(1, 7, 4);
+    g.insertarArista(2, 3, 3);
+    g.insertarArista(2, 6, 11);
+    g.insertarArista(3, 6, 9);
+    g.insertarArista(4, 7, 5);
+    g.insertarArista(4, 5, 4);
+    g.insertarArista(4, 6, 20);
+    g.insertarArista(5, 2, 1);
+    g.insertarArista(5, 6, 13);
+    g.insertarArista(7, 2, 7);
+    g.insertarArista(7, 5, 6);
+
     /*g.insertarVertice('s');
     g.insertarVertice('t');
     g.insertarVertice('x');
@@ -78,13 +78,57 @@ int main()
     g.insertarArista('l','d',2);
     g.insertarArista('l','f',1);*/
     g.imprimirGrafo();
-    cout << "RECORRIDO DFS" << endl;
+    cout << "\n---------------------------------------------------";
+    cout << "\nRECORRIDO DFS" << endl;
     g.recorridoDFS(0);
+    cout << "\n---------------------------------------------------";
     cout << "\nRECORRIDO BFS" << endl;
     g.recorridoBFS(0);
-   cout<<"\nRECORRIDO PRIM" <<endl;
-   g.prim(0);
-   cout<<"\nRECORRIDO DIJKSTRA" <<endl;
-   g.dijkstra(0);
+    cout << "\n---------------------------------------------------";
+    cout << "\nRECORRIDO PRIM" << endl;
+    vector<int> camino;
+    vector<int> predecesor;
+    vector<int> pesos;
+    g.prim(0, camino, predecesor, pesos);
 
+    cout << endl;
+    cout << "Vertices" << endl;
+    for (int i = 0; i < camino.size(); ++i)
+    {
+        cout << camino[i] << ", ";
+    }
+    cout << endl;
+    cout << "Predecesor" << endl;
+    for (int i = 0; i < predecesor.size(); i++)
+    {
+        cout << predecesor[i] << ", ";
+    }
+
+    cout << endl;
+    cout << "Peso conexiones" << endl;
+    for (int i = 0; i < pesos.size(); ++i)
+    {
+        cout << pesos[i] << ", ";
+    }
+    cout << "\n---------------------------------------------------";
+    cout << "\n\nRECORRIDO DIJKSTRA" << endl;
+    vector<int> dist;
+    vector<int> s;
+    vector<int> pred;
+    g.dijkstra(0,s,pred,dist);
+    cout << endl;
+    cout << "Vertices" << endl;
+    for (int i = 0; i < s.size(); i++){
+        cout << s[i]<<", ";
+    }
+    cout <<endl;
+    cout << "Predecesor" << endl;
+    for(int i = 0; i < dist.size(); ++i){
+        cout << dist[i] << ", ";
+    }
+    cout <<endl;
+    cout << "Peso conexiones" << endl;
+    for(int i = 0; i < pred.size(); ++i){
+        cout << pred[i] << ", ";
+    }
 }
