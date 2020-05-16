@@ -114,6 +114,7 @@ int main(int argc, char *argv[])
   float cosTotal;
   for (unsigned int j = 1; j < g.cantiVertices(); ++j)
   {
+    std::cout<< "---------------------------------------------------------------------\n";
     std::cout << "Casa " << j << ":"
               << g.obtenerVertice(j).X << "," << g.obtenerVertice(j).Y << std::endl;
     std::cout << "Distancia lineal a porteria: " << distLineales[j - 1] << std::endl;
