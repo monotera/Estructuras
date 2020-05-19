@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <utility>
-
+#include <stack>
 using namespace std;
 
 typedef long long unsigned ll;
@@ -22,6 +22,7 @@ public:
     void insertarVertice(T Vertice);
     void insertarArista(T origen, T destino, C peso);
     ll   buscarVertice(T vertice);
+    T    obtenerVertice(ll indice);
     bool buscarArista(ll origen, ll destino);
     void eliminarVertice(T vertice);
     void eliminarArista(T origen, T destino);
@@ -33,6 +34,9 @@ public:
     void prim(T inicio,vector<T> &camino,vector<T> &predecesor ,vector<C> &pesos);
     void menorPeso(vector<pair<int,int>> &vistos);
     void dijkstra(T inicio, vector<T> &s, vector<T> &pred,  vector<C> &dist);
+    vector<C**> floydWarshall();
+    vector<T> caminoFloyd(vector<C**> floyd, T ori,T destino);
+    vector<vector<vector<T>>> caminosFloyd(vector<C**> floyd);
 };
 
 #include "GrafoM.hxx"

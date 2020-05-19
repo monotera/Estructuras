@@ -1,11 +1,17 @@
 #include <iostream>
 #include <queue>
 #include <algorithm>
+#define INF 2000
 
 template <class T, class C>
 int GrafoM<T, C>::cantiVertices()
 {
     return this->numVertices;
+}
+template <class T, class C>
+T GrafoM<T, C>::obtenerVertice(ll indice)
+{
+    return vertices[indice];
 }
 template <class T, class C>
 int GrafoM<T, C>::cantiAristas()
@@ -187,7 +193,7 @@ void GrafoM<T, C>::recorridoBFS(T inicio)
         cout << "El dato no existe" << endl;
 }
 template <class T, class C>
-void GrafoM<T, C>::prim(T inicio,vector<T> &nuevosV, vector<T> &pred,  vector<C> &nuevasA)
+void GrafoM<T, C>::prim(T inicio, vector<T> &nuevosV, vector<T> &pred, vector<C> &nuevasA)
 {
     vector<pair<int, int>> listaMenores;
     nuevosV.push_back(inicio);
@@ -267,14 +273,14 @@ void GrafoM<T, C>::menorPeso(vector<pair<int, int>> &vistos)
     }
 }
 template <class T, class C>
-void GrafoM<T, C>::dijkstra(T inicio, vector<T> &s, vector<T> &pred,  vector<C> &dist)
+void GrafoM<T, C>::dijkstra(T inicio, vector<T> &s, vector<T> &pred, vector<C> &dist)
 {
     vector<T> q = vertices;
     for (int i = 0; i < numVertices; i++)
     {
         dist.push_back(100000);
-        pred.push_back(0);
     }
+    pred.resize(numVertices);
     pred[0] = inicio;
     dist[0] = 0;
     while (!q.empty())
@@ -283,9 +289,10 @@ void GrafoM<T, C>::dijkstra(T inicio, vector<T> &s, vector<T> &pred,  vector<C> 
         int ori;
         for (int i = 0; i < dist.size(); i++)
         {
-            if(find(s.begin(),s.end(),vertices[i]) == s.end())
-            {                
-                if(dist[i] < menor){
+            if (find(s.begin(), s.end(), vertices[i]) == s.end())
+            {
+                if (dist[i] < menor)
+                {
                     menor = dist[i];
                     ori = i;
                 }
@@ -295,7 +302,7 @@ void GrafoM<T, C>::dijkstra(T inicio, vector<T> &s, vector<T> &pred,  vector<C> 
         int indice = 0;
         for (int i = 0; i < q.size(); i++)
         {
-            if (q[i] == menor)
+            if (q[i] == vertices[ori])
             {
                 indice = i;
             }
@@ -314,4 +321,95 @@ void GrafoM<T, C>::dijkstra(T inicio, vector<T> &s, vector<T> &pred,  vector<C> 
             }
         }
     }
+}
+template <class T, class C>
+vector<C **> GrafoM<T, C>::floydWarshall()
+{
+    vector<C **> v;
+    int tam = vertices.size();
+    C **path = new C *[tam];
+    T **pred = new C *[tam];
+    for (int i = 0; i < tam; i++)
+    {
+        path[i] = new C[tam];
+        pred[i] = new C[tam];
+    }
+    for (int i = 0; i < vertices.size(); i++)
+    {
+
+        for (int j = 0; j < vertices.size(); j++)
+        {
+            if (matAristas[i][j] == 0 && i != j)
+            {
+                path[i][j] = INF;
+            }
+            else
+                path[i][j] = matAristas[i][j];
+
+            if (matAristas[i][j] < INF && i != j && matAristas[i][j] != 0)
+            {
+                pred[i][j] = i;
+            }
+            else
+                pred[i][j] = -1;
+        }
+    }
+    for (int k = 0; k < vertices.size(); k++)
+        for (int i = 0; i < vertices.size(); i++)
+            for (int j = 0; j < vertices.size(); j++)
+            {
+                int dt = path[i][k] + path[k][j];
+                if (path[i][j] > dt)
+                {
+                    path[i][j] = dt;
+                    pred[i][j] = pred[k][j];
+                }
+            }
+    v.push_back(path);
+    v.push_back(pred);
+    return v;
+}
+template <class T, class C>
+vector<T> GrafoM<T, C>::caminoFloyd(vector<C **> floyd, T origen, T destino)
+{
+    ll ori = buscarVertice(origen);
+    ll des = buscarVertice(destino);
+    int **path = floyd[0];
+    int **pred = floyd[1];
+    stack<ll> aux;
+    vector<T> camino;
+    if (ori != -1 && des != -1)
+    {
+        while (des != -1)
+        {
+            aux.push(des);
+            des = pred[ori][des];
+        }
+    }
+    while (!aux.empty())
+    {
+        camino.push_back(obtenerVertice(aux.top()));
+        aux.pop();
+    }
+    return camino;
+}
+template <class T, class C>
+vector<vector<vector<T>>> GrafoM<T, C>::caminosFloyd(vector<C **> floyd)
+{
+    vector<vector<vector<T>>> caminos;
+    vector<vector<T>> aux;
+    vector<T> camino;
+    char l;
+    for (ll i = 0; i < numVertices; i++)
+    {
+        for (ll j = 0; j < numVertices; j++)
+        {
+            camino = caminoFloyd(floyd, obtenerVertice(i), obtenerVertice(j));
+
+            aux.push_back(camino);
+        }
+        caminos.push_back(aux);
+        aux.clear();
+    }
+    return caminos;
 }
