@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <utility>
-
+#define INF 2000
 using namespace std;
 
 typedef long long unsigned ll;

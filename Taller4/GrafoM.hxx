@@ -217,8 +217,8 @@ vector<vector<unsigned long>> GrafoM<T, C>::dijkstra(ll inicio)
         dist.push_back(100000);
     }
     pred.resize(numVertices);
-    pred[0] = obtenerVertice(inicio);
-    dist[0] = 0;
+    pred[inicio] = obtenerVertice(inicio);
+    dist[inicio] = 0;
     bool encontrado = false;
     while (!q.empty())
     {
