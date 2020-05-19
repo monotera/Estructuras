@@ -33,11 +33,22 @@ int secuencia::esSubSecuencia(string sub){
 int secuencia::enmascarar(string sub){
     int cantiEnmascarar = esSubSecuencia(sub);
     string replaceSTR;
+    string temp;
     for(int i = 0; i < sub.size(); ++i)
         replaceSTR += "X";
     list<string>::iterator it = linea.begin();
+    int ancho = (*it).size();
+    for(;it != linea.end();it++)
+        temp+=(*it);  
+    findAndReplaceAll(temp,sub,replaceSTR); 
+    it = linea.begin();
+    int util = 0;
     for(;it != linea.end();it++){
-        findAndReplaceAll(*it,sub,replaceSTR);   
+        if((*it).size()==ancho)
+            (*it)=temp.substr(util*ancho,ancho+1);
+        else
+            (*it)=temp.substr(util*ancho,(*it).size());        
+        util++;
     }
     return cantiEnmascarar;
 }
