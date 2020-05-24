@@ -128,6 +128,9 @@ bool sistema::cifrar(string nombreF)
             {
                 file.write((char *)&aux[j], sizeof(char));
             }
+        }
+        for (int i = 0; i < dat.cantiSecuencias; i++)
+        {
             file.write((char *)&dat.longiSec[i], sizeof(long));
             file.write((char *)&dat.identacion[i], sizeof(short));
             //----------------------------------------------------------------------
@@ -161,15 +164,16 @@ bool sistema::desCifrar(string nombreF)
     {
         res = true;
         newArchivo.read((char *)&datEx.cantiBases, sizeof(short));
+
+        datEx.caracterBase.resize(datEx.cantiBases);
+        datEx.frecuenciaBase.resize(datEx.cantiBases);
         for (int i = 0; i < datEx.cantiBases; ++i)
         {
-            datEx.caracterBase.push_back(' ');
-            datEx.frecuenciaBase.push_back(0);
             newArchivo.read((char *)&datEx.caracterBase[i], sizeof(char));
             newArchivo.read((char *)&datEx.frecuenciaBase[i], sizeof(long));
         }
-        datEx.caracterBase.size();
         newArchivo.read((char *)&datEx.cantiSecuencias, sizeof(int));
+
         char *arr = new char[datEx.cantiBases];
         long *freq = new long[datEx.cantiBases];
         for (int i = 0; i < datEx.cantiBases; ++i)
@@ -178,23 +182,24 @@ bool sistema::desCifrar(string nombreF)
             freq[i] = datEx.frecuenciaBase[i];
         }
         arbolHuff.generarArbol(arr, freq, datEx.cantiBases);
-        datEx.nombreSec.reserve(datEx.cantiSecuencias);
+        datEx.TamNombreSec.resize(datEx.cantiSecuencias);
         for (int i = 0; i < datEx.cantiSecuencias; i++)
         {
-            datEx.TamNombreSec.push_back(0);
             newArchivo.read((char *)&datEx.TamNombreSec[i], sizeof(short));
             vector<char> aux;
-            char nombreC;
-            aux.reserve(datEx.TamNombreSec[i]);
+            aux.resize(datEx.TamNombreSec[i]);
             for (int j = 0; j < datEx.TamNombreSec[i]; j++)
             {
-                newArchivo.read((char *)&nombreC, sizeof(char));
-                aux.push_back(nombreC);
+                newArchivo.read((char *)&aux[j], sizeof(char));
             }
             datEx.nombreSec.push_back(aux);
-            datEx.longiSec.push_back(0);
+        }
+        
+        datEx.longiSec.resize(datEx.cantiSecuencias);
+        datEx.identacion.resize(datEx.cantiSecuencias);
+        for (int i = 0; i < datEx.cantiSecuencias; i++)
+        {   
             newArchivo.read((char *)&datEx.longiSec[i], sizeof(long));
-            datEx.identacion.push_back(0);
             newArchivo.read((char *)&datEx.identacion[i], sizeof(short));
             char dir;
             int l = 0;
@@ -206,6 +211,9 @@ bool sistema::desCifrar(string nombreF)
             int cantiPal = 0;
             string secI = "";
             bool fin = false;
+            if(datEx.longiSec[i] >= 9999999){
+                return false;
+            }
             while (!fin)
             {
                 newArchivo.read((char *)&y, sizeof(char));
@@ -228,9 +236,11 @@ bool sistema::desCifrar(string nombreF)
                     }
                     l++;
                 }
+                
             }
             datEx.secu.push_back(secI);
         }
+        
     }
     crearFa(datEx);
     newArchivo.close();
