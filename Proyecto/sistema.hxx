@@ -211,7 +211,8 @@ bool sistema::desCifrar(string nombreF)
             int cantiPal = 0;
             string secI = "";
             bool fin = false;
-            if(datEx.longiSec[i] >= 9999999){
+            cout << datEx.longiSec[i] << endl;
+            if(datEx.longiSec[i] >= 9999999 || datEx.longiSec[i] < 0){
                 return false;
             }
             while (!fin)
