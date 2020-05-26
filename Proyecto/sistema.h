@@ -6,14 +6,17 @@
 #include<string>
 #include "archivo.h"
 #include "HuffmanArbol.h"
-
+#include "GrafoM.h"
+#include "NodoGrafo.h"
 using namespace std;
 
 class sistema
 {
 private:
+   GrafoM <NodoGrafo,double> grafo;
    archivo arch;
    HuffmanArbol arbolHuff;
+
 public:
     int cargarArchivo(string nombre);
     int conteo();
@@ -28,6 +31,10 @@ public:
     struct datosBin;
     void llenarStruct(datosBin &datos);
     bool crearFa(datosBin dat);
+    bool generarGrafo(string nombre);
+    bool llenarVertices(string nombre);
+    bool llenarConex();
+    int  ruta_mas_corta(string nombre, int i, int j, int x,int y);
 };
 
 

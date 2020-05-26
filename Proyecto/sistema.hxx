@@ -194,11 +194,11 @@ bool sistema::desCifrar(string nombreF)
             }
             datEx.nombreSec.push_back(aux);
         }
-        
+
         datEx.longiSec.resize(datEx.cantiSecuencias);
         datEx.identacion.resize(datEx.cantiSecuencias);
         for (int i = 0; i < datEx.cantiSecuencias; i++)
-        {   
+        {
             newArchivo.read((char *)&datEx.longiSec[i], sizeof(long));
             newArchivo.read((char *)&datEx.identacion[i], sizeof(short));
             char dir;
@@ -212,7 +212,8 @@ bool sistema::desCifrar(string nombreF)
             string secI = "";
             bool fin = false;
             cout << datEx.longiSec[i] << endl;
-            if(datEx.longiSec[i] >= 9999999 || datEx.longiSec[i] < 0){
+            if (datEx.longiSec[i] >= 9999999 || datEx.longiSec[i] < 0)
+            {
                 return false;
             }
             while (!fin)
@@ -237,11 +238,9 @@ bool sistema::desCifrar(string nombreF)
                     }
                     l++;
                 }
-                
             }
             datEx.secu.push_back(secI);
         }
-        
     }
     crearFa(datEx);
     newArchivo.close();
@@ -328,4 +327,59 @@ bool sistema::crearFa(datosBin dat)
         remove("borrar.fa");
     }
     return res;
+}
+bool sistema::generarGrafo(string nombre)
+{
+    grafo.reiniciarGrafo();
+    llenarVertices(nombre);
+    llenarConex();
+}
+bool sistema::llenarVertices(string nombre)
+{
+    bool res = false;
+    vector<NodoGrafo> nodos = arch.generarVertices(nombre);
+    if (nodos.size() != 0)
+    {
+        for (int i = 0; i < nodos.size(); i++)
+        {
+            grafo.insertarVertice(nodos[i]);
+        }
+        res = true;
+    }
+    grafo.recorridoPlano();
+    return res;
+}
+bool sistema::llenarConex()
+{
+    for (int i = 0; i < grafo.cantiVertices(); i++)
+    {
+        NodoGrafo aux = grafo.obtenerVertice(i);
+        vector<NodoGrafo> vecinos = grafo.obtenerVeci(aux);
+        cout << "Tama: " << vecinos.size() << endl;
+        for (int j = 0; j < vecinos.size(); j++)
+        {
+            grafo.insertarArista(aux, vecinos[j], aux.calcularConexion(vecinos[j].getLetra()));
+        }
+    }
+    grafo.imprimirGrafo();
+    return true;
+}
+
+int sistema::ruta_mas_corta(string nombre, int i, int j, int x, int y)
+{
+    generarGrafo(nombre);
+    int ori = grafo.buscarCordenadas(i, j);
+    int des = grafo.buscarCordenadas(x, y);
+    cout << ori << " " << des <<endl;
+    if (ori != -1 && des != -1)
+    {
+        cout << "entro" <<endl;
+        NodoGrafo origen = grafo.obtenerVertice(ori);
+        NodoGrafo destino = grafo.obtenerVertice(des);
+        vector<NodoGrafo> camino = grafo.generarCamino(origen, destino);
+        for (int i = 0; i < camino.size(); i++)
+        {
+            cout << camino[i].getLetra() << ", ";
+        }
+    }
 }

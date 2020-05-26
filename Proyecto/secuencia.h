@@ -15,6 +15,8 @@ protected:
     string descripcion;
     long cantiBase = 0;
 public:
+    secuencia();
+    secuencia(string des);
     list <string> getLineas();
     string getDescripcione();
     string histograma();

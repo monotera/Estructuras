@@ -9,7 +9,11 @@ using namespace std;
 
 void findAndReplaceAll(std::string & data, std::string toSearch, std::string replaceStr);
 
-
+secuencia::secuencia(){
+}
+secuencia::secuencia(string des){
+    this->descripcion = des;
+}
 list <string> secuencia::getLineas(){
     return this->linea;
 }
