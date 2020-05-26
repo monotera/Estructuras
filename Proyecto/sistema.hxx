@@ -332,7 +332,7 @@ void sistema::generarGrafo(string nombre)
 {
     grafo.reiniciarGrafo();
     llenarVertices(nombre);
-    llenarConex();
+    llenarConex(nombre);
 }
 bool sistema::llenarVertices(string nombre)
 {
@@ -348,12 +348,14 @@ bool sistema::llenarVertices(string nombre)
     }
     return res;
 }
-bool sistema::llenarConex()
+bool sistema::llenarConex(string nombre)
 {
+    int iden = arch.getIdentacionN(nombre);
+    int lineas = arch.cantiLineas(nombre);
     for (int i = 0; i < grafo.cantiVertices(); i++)
     {
         NodoGrafo aux = grafo.obtenerVertice(i);
-        vector<NodoGrafo> vecinos = grafo.obtenerVeci(aux);
+        vector<NodoGrafo> vecinos = grafo.obtenerVeci(aux,iden,lineas);
         for (int j = 0; j < vecinos.size(); j++)
         {
             grafo.insertarArista(aux, vecinos[j], aux.calcularConexion(vecinos[j].getLetra()));
@@ -381,7 +383,6 @@ string sistema::ruta_mas_corta(string nombre, int i, int j, int x, int y)
             vector<NodoGrafo> camino = grafo.generarCamino(origen, destino);
             for (int i = 0; i < camino.size(); i++)
             {
-                cout << camino[i].getX() << " " << camino[i].getY()<<", ";
                 resp += camino[i].getLetra();
                 if (i != camino.size() - 1)
                     resp += ", ";

@@ -42,7 +42,7 @@ public:
     vector<T> caminoFloyd(vector<C**> floyd, T ori,T destino);
     vector<vector<vector<T>>> caminosFloyd(vector<C**> floyd);
     vector<T> generarCamino(T ori,T destino);
-    vector<T> obtenerVeci(T origen);
+    vector<T> obtenerVeci(T origen, int ind, int lineas);
     int buscarCordenadas(int x, int y);
     
 };

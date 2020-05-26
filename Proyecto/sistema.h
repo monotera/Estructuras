@@ -33,7 +33,7 @@ public:
     bool crearFa(datosBin dat);
     void generarGrafo(string nombre);
     bool llenarVertices(string nombre);
-    bool llenarConex();
+    bool llenarConex(string nombre);
     string ruta_mas_corta(string nombre, int i, int j, int x,int y);
 };
 

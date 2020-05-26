@@ -8,8 +8,8 @@ int main(){
     char i;
     sistema sys;
     sys.cargarArchivo("prue.fa");
-    sys.generarGrafo("prueba");
-    sys.ruta_mas_corta("prueba", 0,0,1,2);
+    //sys.generarGrafo("24.6jsd12.Tut");
+    sys.ruta_mas_corta("24.6jsd12.Tut", 0,0,1,2);
 
 
 

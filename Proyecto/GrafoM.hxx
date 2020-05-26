@@ -532,26 +532,42 @@ vector<T> GrafoM<T, C>::generarCamino(T inicio, T destino)
     return camino;
 }
 template <class T, class C>
-vector<T> GrafoM<T, C>::obtenerVeci(T inicio)
+vector<T> GrafoM<T, C>::obtenerVeci(T inicio, int iden, int lineas)
 {
     vector<T> vecinos;
-    for (int i = 0; i < numVertices; i++)
+    vector<ll> v;
+    int x = inicio.getX();
+    int y = inicio.getY();
+    int indice = -1;
+    if (x + 1 < lineas)
     {
-        if (inicio.getX() - 1 == vertices[i].getX() && inicio.getY() == vertices[i].getY())
+        indice = ((x + 1) * iden) + y;
+        v.push_back(indice);
+    }
+    indice = -1;
+    if (x - 1 >= 0)
+    {
+        indice = ((x - 1) * iden) + y;
+        v.push_back(indice);
+    }
+    indice = -1;
+    if (y + 1 < iden)
+    {
+        indice = ((x)*iden) + (y + 1);
+        v.push_back(indice);
+    }
+    indice = -1;
+    if (y - 1 >= 0)
+    {
+        indice = ((x)*iden) + (y - 1);
+        v.push_back(indice);
+    }
+    indice = -1;
+    for (int i = 0; i < v.size(); i++)
+    {
+        if (v[i] < numVertices)
         {
-            vecinos.push_back(vertices[i]);
-        }
-        else if (inicio.getX() + 1 == vertices[i].getX() && inicio.getY() == vertices[i].getY())
-        {
-            vecinos.push_back(vertices[i]);
-        }
-        else if (inicio.getX() == vertices[i].getX() && inicio.getY() - 1 == vertices[i].getY())
-        {
-            vecinos.push_back(vertices[i]);
-        }
-        else if (inicio.getX() == vertices[i].getX() && inicio.getY() + 1 == vertices[i].getY())
-        {
-            vecinos.push_back(vertices[i]);
+            vecinos.push_back(obtenerVertice(v[i]));
         }
     }
     return vecinos;

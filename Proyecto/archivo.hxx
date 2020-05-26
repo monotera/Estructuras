@@ -137,6 +137,17 @@ vector<short> archivo::getIdentaciones()
     }
     return ide;
 }
+short archivo::getIdentacionN(string nombre)
+{
+    short ide = -1;
+    list<secuencia>::iterator it;
+    for (it = secuencias.begin(); it != secuencias.end() && ide == -1; it++)
+    {
+        if(it->getDescripcione() == nombre)
+            ide = (*it).getIndentacion();
+    }
+    return ide;
+}
 short archivo::llenarArreglos(char car[], long fre[])
 {
     list<secuencia>::iterator it = secuencias.begin();
@@ -307,4 +318,7 @@ vector<NodoGrafo> archivo::generarVertices(string nombre)
         x++;
     }
     return nodos;
+}
+int archivo::cantiLineas(string nombre){
+    return buscarSec(nombre).getLineas().size();
 }
