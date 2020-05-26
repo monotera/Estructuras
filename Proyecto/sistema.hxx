@@ -346,7 +346,6 @@ bool sistema::llenarVertices(string nombre)
         }
         res = true;
     }
-    grafo.recorridoPlano();
     return res;
 }
 bool sistema::llenarConex()
@@ -355,31 +354,36 @@ bool sistema::llenarConex()
     {
         NodoGrafo aux = grafo.obtenerVertice(i);
         vector<NodoGrafo> vecinos = grafo.obtenerVeci(aux);
-        cout << "Tama: " << vecinos.size() << endl;
         for (int j = 0; j < vecinos.size(); j++)
         {
             grafo.insertarArista(aux, vecinos[j], aux.calcularConexion(vecinos[j].getLetra()));
         }
     }
-    grafo.imprimirGrafo();
     return true;
 }
 
-int sistema::ruta_mas_corta(string nombre, int i, int j, int x, int y)
+string sistema::ruta_mas_corta(string nombre, int i, int j, int x, int y)
 {
+    string resp = "";
     generarGrafo(nombre);
-    int ori = grafo.buscarCordenadas(i, j);
-    int des = grafo.buscarCordenadas(x, y);
-    cout << ori << " " << des <<endl;
-    if (ori != -1 && des != -1)
-    {
-        cout << "entro" <<endl;
-        NodoGrafo origen = grafo.obtenerVertice(ori);
-        NodoGrafo destino = grafo.obtenerVertice(des);
-        vector<NodoGrafo> camino = grafo.generarCamino(origen, destino);
-        for (int i = 0; i < camino.size(); i++)
-        {
-            cout << camino[i].getLetra() << ", ";
+    if (grafo.cantiVertices() != 0){
+        int ori = grafo.buscarCordenadas(i, j);
+        int des = grafo.buscarCordenadas(x, y);
+        if(ori==-1)
+            resp = "1";
+        else if(des==-1)
+            resp = "2";
+        else{
+            NodoGrafo origen = grafo.obtenerVertice(ori);
+            NodoGrafo destino = grafo.obtenerVertice(des);
+            vector<NodoGrafo> camino = grafo.generarCamino(origen, destino);
+            for (int i = 0; i < camino.size(); i++)
+            {
+                resp+=camino[i].getLetra();
+                if(i!=camino.size()-1)
+                    resp+=", ";
+            }
         }
     }
+    return resp;
 }

@@ -301,8 +301,7 @@ vector<NodoGrafo> archivo::generarVertices(string nombre){
         for (int y = 0; y < linea.size(); y++)
         {
             NodoGrafo nodo(x,y,linea[y]);
-            nodos.push_back(nodo);
-            
+            nodos.push_back(nodo);            
         }
         x++;        
     }

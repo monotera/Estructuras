@@ -6,7 +6,6 @@
 template <class T, class C>
 void GrafoM<T, C>::reiniciarGrafo()
 {
-    cout << "entro" << endl;
     this->vertices.clear();
     numVertices = 0;
     matAristas.clear();

@@ -34,7 +34,7 @@ public:
     bool generarGrafo(string nombre);
     bool llenarVertices(string nombre);
     bool llenarConex();
-    int  ruta_mas_corta(string nombre, int i, int j, int x,int y);
+    string ruta_mas_corta(string nombre, int i, int j, int x,int y);
 };
 
 
