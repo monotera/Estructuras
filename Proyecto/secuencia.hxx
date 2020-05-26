@@ -3,7 +3,7 @@
 #include <list>
 #include <string>
 #include <vector>
-
+#include <algorithm>
 
 using namespace std;
 
@@ -11,8 +11,10 @@ void findAndReplaceAll(std::string & data, std::string toSearch, std::string rep
 
 secuencia::secuencia(){
 }
-secuencia::secuencia(string des){
-    this->descripcion = des;
+secuencia::secuencia(string str){
+    std::string::iterator end_pos = std::remove(str.begin(), str.end(), ' ');
+    str.erase(end_pos, str.end());
+    this->descripcion = str;
 }
 list <string> secuencia::getLineas(){
     return this->linea;
@@ -75,6 +77,8 @@ string secuencia::getDescripcione(){
 }
 void secuencia::setDescripcion(string nuevaDesc){
     nuevaDesc.erase(nuevaDesc.begin(),nuevaDesc.begin()+1);
+    std::string::iterator end_pos = std::remove(nuevaDesc.begin(), nuevaDesc.end(), ' ');
+    nuevaDesc.erase(end_pos, nuevaDesc.end());
    this->descripcion = nuevaDesc;
 }
 int secuencia::setCantiBase(){

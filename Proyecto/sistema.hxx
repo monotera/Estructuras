@@ -328,7 +328,7 @@ bool sistema::crearFa(datosBin dat)
     }
     return res;
 }
-bool sistema::generarGrafo(string nombre)
+void sistema::generarGrafo(string nombre)
 {
     grafo.reiniciarGrafo();
     llenarVertices(nombre);
@@ -366,22 +366,25 @@ string sistema::ruta_mas_corta(string nombre, int i, int j, int x, int y)
 {
     string resp = "";
     generarGrafo(nombre);
-    if (grafo.cantiVertices() != 0){
+    if (grafo.cantiVertices() != 0)
+    {
         int ori = grafo.buscarCordenadas(i, j);
         int des = grafo.buscarCordenadas(x, y);
-        if(ori==-1)
+        if (ori == -1)
             resp = "1";
-        else if(des==-1)
+        else if (des == -1)
             resp = "2";
-        else{
+        else
+        {
             NodoGrafo origen = grafo.obtenerVertice(ori);
             NodoGrafo destino = grafo.obtenerVertice(des);
             vector<NodoGrafo> camino = grafo.generarCamino(origen, destino);
             for (int i = 0; i < camino.size(); i++)
             {
-                resp+=camino[i].getLetra();
-                if(i!=camino.size()-1)
-                    resp+=", ";
+                cout << camino[i].getX() << " " << camino[i].getY()<<", ";
+                resp += camino[i].getLetra();
+                if (i != camino.size() - 1)
+                    resp += ", ";
             }
         }
     }

@@ -31,7 +31,7 @@ public:
     struct datosBin;
     void llenarStruct(datosBin &datos);
     bool crearFa(datosBin dat);
-    bool generarGrafo(string nombre);
+    void generarGrafo(string nombre);
     bool llenarVertices(string nombre);
     bool llenarConex();
     string ruta_mas_corta(string nombre, int i, int j, int x,int y);

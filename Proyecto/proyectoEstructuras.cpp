@@ -141,7 +141,7 @@ int main(int argc, char *argv[])
                 }
                 else if (sys.guardar(archivo) == 0)
                 {
-                    cout << "Las secuncias han sido guardadas en " << archivo  << endl;
+                    cout << "Las secuncias han sido guardadas en " << archivo << endl;
                 }
                 else if (sys.guardar(archivo) == -1)
                 {
@@ -190,11 +190,13 @@ int main(int argc, char *argv[])
             {
                 cout << "---Decodificar (Archivo valido)---" << endl;
                 string nom = archivo;
-                if(!sys.desCifrar(nom)){
-                    cout << " No se pueden cargar las secuencias en "<< nom <<endl;
+                if (!sys.desCifrar(nom))
+                {
+                    cout << " No se pueden cargar las secuencias en " << nom << endl;
                 }
-                else{
-                    cout << "Secuencias decodificadas desde "<< nom <<" y cargadas en memoria.";
+                else
+                {
+                    cout << "Secuencias decodificadas desde " << nom << " y cargadas en memoria.";
                 }
             }
             else
@@ -204,21 +206,21 @@ int main(int argc, char *argv[])
         {
             char *des = palabra[2];
             if (argc == 7)
-            {   
+            {
                 cout << "---RUTA MAS CORTA---\n";
-                string resp = sys.ruta_mas_corta(des,atoi(palabra[3]),atoi(palabra[4]),atoi(palabra[5]),atoi(palabra[6]));
-                if(resp=="")
+                string resp = sys.ruta_mas_corta(des, atoi(palabra[3]), atoi(palabra[4]), atoi(palabra[5]), atoi(palabra[6]));
+                if (resp == "")
                     cout << "La secuencia dada no existe.\n";
-                else if(resp=="1")
+                else if (resp == "1")
                     cout << "La base en la posición [" << palabra[3] << "," << palabra[4] << "] no existe.\n";
-                else if(resp=="2")
+                else if (resp == "2")
                     cout << "La base en la posición [" << palabra[5] << "," << palabra[6] << "] no existe.\n";
                 else
-                    cout << "La ruta mas corta entre la base en [" << palabra[3] << "," << palabra[4] << "] y la base en [" << palabra[5] << "," << palabra[6] << "] es: " << resp; 
+                    cout << "La ruta mas corta entre la base en [" << palabra[3] << "," << palabra[4] << "] y la base en [" << palabra[5] << "," << palabra[6] << "] es: " << resp;
             }
             else
                 cout << "El numero de comandos es invalido" << endl;
-                cout << endl;
+            cout << endl;
         }
         else if (strcmp(comando, "base_remota") == 0)
         {
