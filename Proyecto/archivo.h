@@ -5,7 +5,7 @@
 #include <list>
 #include<string>
 #include "secuencia.h"
-
+#include "NodoGrafo.h"
 using namespace std;
 
 class archivo
@@ -29,6 +29,8 @@ public:
     short llenarArreglos(char car[],long fre[]);
     vector<string> getNombreSec();
     vector<short> getIdentaciones();
+    secuencia buscarSec(string nombre);
+    vector<NodoGrafo> generarVertices(string nombre); 
 };
 
 
