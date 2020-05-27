@@ -383,7 +383,6 @@ string sistema::ruta_mas_corta(string nombre, int i, int j, int x, int y)
             vector<NodoGrafo> camino = grafo.generarCamino(origen, destino);
             for (int i = 0; i < camino.size(); i++)
             {
-                cout << camino[i].getX() << " " << camino[i].getY() << ", ";
                 resp += camino[i].getLetra();
                 if (i != camino.size() - 1)
                     resp += ", ";
@@ -420,9 +419,6 @@ string sistema::base_remota(string nombre, int i, int j)
                     actual = grafo.generarCaminoBase(origen, grafo.obtenerVertice(i),pred);
                     for (unsigned int i = 0; i < actual.size() - 1; ++i)
                         costoActual += actual[i].calcularConexion(actual[i + 1].getLetra());
-                    cout << costoActual << endl
-                         << endl;
-
                     if (costoActual > costo)
                     {
                         costo = costoActual;
@@ -431,16 +427,17 @@ string sistema::base_remota(string nombre, int i, int j)
                 }
             }
             resp = "La base remota está ubicada en [" + to_string(camino.back().getX()) + "][" + to_string(camino.back().getY())+"]";
-            resp += "y la ruta entre la base en [" + to_string(origen.getX()) + "][" + to_string(origen.getY())+"]"+"y la base remota en ";
-            cout << resp<<endl;
+            resp += " y la ruta entre la base en [" + to_string(origen.getX()) + "][" + to_string(origen.getY())+"]"+" y la base remota en ";
+            resp += " [" + to_string(camino.back().getX()) + "][" + to_string(camino.back().getY())+"]" + " es: ";
+            
             for (int i = 0; i < camino.size(); i++)
             {
-                cout << camino[i].getX() << " " << camino[i].getY() << ", ";
                 resp += camino[i].getLetra();
                 if (i != camino.size() - 1)
                     resp += ", ";
             }
-        }//Afregar costo final 
+            resp += " \nEl costo total es: " + to_string(costo) + "\n";
+        }
     }
     return resp;
 }

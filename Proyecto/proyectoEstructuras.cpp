@@ -227,10 +227,14 @@ int main(int argc, char *argv[])
             if (argc == 5)
             {
                 char *des = palabra[2];
-                if (atoi(palabra[3]) == 0 || atoi(palabra[4]) == 0)
-                    cout << "Una de las coordenadas no es valida, asegurese que sean solo numeros enteros\n";
-                cout << "---Base remota---";
-                cout << "La secuencia dada no existe\n";
+                cout << "---Base remota---\n";
+                string resp = sys.base_remota(des, atoi(palabra[3]), atoi(palabra[4]));
+                if (resp == "")
+                    cout << "La secuencia dada no existe.\n";
+                else if (resp == "1")
+                    cout << "La base en la posición [" << palabra[3] << "," << palabra[4] << "] no existe.\n";
+                else
+                    cout << resp << endl;
             }
             else
                 cout << "El numero de comandos es invalido" << endl;
