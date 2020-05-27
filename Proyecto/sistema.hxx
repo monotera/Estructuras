@@ -7,7 +7,7 @@
 #include "archivo.h"
 #include "sistema.h"
 #include <bitset>
-
+#include <sstream>
 using namespace std;
 
 /*-1  = el archivo no se pudo abrir
@@ -355,7 +355,7 @@ bool sistema::llenarConex(string nombre)
     for (int i = 0; i < grafo.cantiVertices(); i++)
     {
         NodoGrafo aux = grafo.obtenerVertice(i);
-        vector<NodoGrafo> vecinos = grafo.obtenerVeci(aux,iden,lineas);
+        vector<NodoGrafo> vecinos = grafo.obtenerVeci(aux, iden, lineas);
         for (int j = 0; j < vecinos.size(); j++)
         {
             grafo.insertarArista(aux, vecinos[j], aux.calcularConexion(vecinos[j].getLetra()));
@@ -383,11 +383,64 @@ string sistema::ruta_mas_corta(string nombre, int i, int j, int x, int y)
             vector<NodoGrafo> camino = grafo.generarCamino(origen, destino);
             for (int i = 0; i < camino.size(); i++)
             {
+                cout << camino[i].getX() << " " << camino[i].getY() << ", ";
                 resp += camino[i].getLetra();
                 if (i != camino.size() - 1)
                     resp += ", ";
             }
+            cout << endl;
         }
+    }
+    return resp;
+}
+string sistema::base_remota(string nombre, int i, int j)
+{
+    string resp = "";
+    generarGrafo(nombre);
+    vector<NodoGrafo> camino;
+    vector<NodoGrafo> actual;
+    double costo = 0.0;
+    double costoActual = 0.0;
+    if (grafo.cantiVertices() != 0)
+    {
+        int ori = grafo.buscarCordenadas(i, j);
+        if (ori == -1)
+            resp = "1";
+        else
+        {
+            vector<NodoGrafo> s;
+            vector<NodoGrafo> pred;
+            vector<double> dist;
+            NodoGrafo origen = grafo.obtenerVertice(ori);
+            grafo.dijkstra(origen, s, pred, dist);
+            for (int i = 0; i < grafo.cantiVertices(); i++)
+            {
+                if (grafo.obtenerVertice(i).getLetra() == origen.getLetra())
+                {
+                    actual = grafo.generarCaminoBase(origen, grafo.obtenerVertice(i),pred);
+                    for (unsigned int i = 0; i < actual.size() - 1; ++i)
+                        costoActual += actual[i].calcularConexion(actual[i + 1].getLetra());
+                    cout << costoActual << endl
+                         << endl;
+
+                    if (costoActual > costo)
+                    {
+                        costo = costoActual;
+                        camino = actual;
+                    }
+                }
+            }
+            resp = "La base remota está ubicada en [" + to_string(camino.back().getX()) + "][" + to_string(camino.back().getY())+"]";
+            resp += "y la ruta entre la base en [" + to_string(origen.getX()) + "][" + to_string(origen.getY())+"]"+"y la base remota en ";
+            cout << resp<<endl;
+            for (int i = 0; i < camino.size(); i++)
+            {
+                cout << camino[i].getX() << " " << camino[i].getY() << ", ";
+                resp += camino[i].getLetra();
+                if (i != camino.size() - 1)
+                    resp += ", ";
+            }
+        }//Afregar costo final 
     }
     return resp;
 }
