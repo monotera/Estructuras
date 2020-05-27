@@ -7,7 +7,7 @@
 #include "archivo.h"
 #include "sistema.h"
 #include <bitset>
-
+#include <sstream>
 using namespace std;
 
 /*-1  = el archivo no se pudo abrir
@@ -328,11 +328,11 @@ bool sistema::crearFa(datosBin dat)
     }
     return res;
 }
-bool sistema::generarGrafo(string nombre)
+void sistema::generarGrafo(string nombre)
 {
     grafo.reiniciarGrafo();
     llenarVertices(nombre);
-    llenarConex();
+    llenarConex(nombre);
 }
 bool sistema::llenarVertices(string nombre)
 {
@@ -346,40 +346,98 @@ bool sistema::llenarVertices(string nombre)
         }
         res = true;
     }
-    grafo.recorridoPlano();
     return res;
 }
-bool sistema::llenarConex()
+bool sistema::llenarConex(string nombre)
 {
+    int iden = arch.getIdentacionN(nombre);
+    int lineas = arch.cantiLineas(nombre);
     for (int i = 0; i < grafo.cantiVertices(); i++)
     {
         NodoGrafo aux = grafo.obtenerVertice(i);
-        vector<NodoGrafo> vecinos = grafo.obtenerVeci(aux);
-        cout << "Tama: " << vecinos.size() << endl;
+        vector<NodoGrafo> vecinos = grafo.obtenerVeci(aux, iden, lineas);
         for (int j = 0; j < vecinos.size(); j++)
         {
             grafo.insertarArista(aux, vecinos[j], aux.calcularConexion(vecinos[j].getLetra()));
         }
     }
-    grafo.imprimirGrafo();
     return true;
 }
 
-int sistema::ruta_mas_corta(string nombre, int i, int j, int x, int y)
+string sistema::ruta_mas_corta(string nombre, int i, int j, int x, int y)
 {
+    string resp = "";
     generarGrafo(nombre);
-    int ori = grafo.buscarCordenadas(i, j);
-    int des = grafo.buscarCordenadas(x, y);
-    cout << ori << " " << des <<endl;
-    if (ori != -1 && des != -1)
+    if (grafo.cantiVertices() != 0)
     {
-        cout << "entro" <<endl;
-        NodoGrafo origen = grafo.obtenerVertice(ori);
-        NodoGrafo destino = grafo.obtenerVertice(des);
-        vector<NodoGrafo> camino = grafo.generarCamino(origen, destino);
-        for (int i = 0; i < camino.size(); i++)
+        int ori = grafo.buscarCordenadas(i, j);
+        int des = grafo.buscarCordenadas(x, y);
+        if (ori == -1)
+            resp = "1";
+        else if (des == -1)
+            resp = "2";
+        else
         {
-            cout << camino[i].getLetra() << ", ";
+            NodoGrafo origen = grafo.obtenerVertice(ori);
+            NodoGrafo destino = grafo.obtenerVertice(des);
+            vector<NodoGrafo> camino = grafo.generarCamino(origen, destino);
+            for (int i = 0; i < camino.size(); i++)
+            {
+                resp += camino[i].getLetra();
+                if (i != camino.size() - 1)
+                    resp += ", ";
+            }
+            cout << endl;
         }
     }
+    return resp;
+}
+string sistema::base_remota(string nombre, int i, int j)
+{
+    string resp = "";
+    generarGrafo(nombre);
+    vector<NodoGrafo> camino;
+    vector<NodoGrafo> actual;
+    double costo = 0.0;
+    double costoActual = 0.0;
+    if (grafo.cantiVertices() != 0)
+    {
+        int ori = grafo.buscarCordenadas(i, j);
+        if (ori == -1)
+            resp = "1";
+        else
+        {
+            vector<NodoGrafo> s;
+            vector<NodoGrafo> pred;
+            vector<double> dist;
+            NodoGrafo origen = grafo.obtenerVertice(ori);
+            grafo.dijkstra(origen, s, pred, dist);
+            for (int i = 0; i < grafo.cantiVertices(); i++)
+            {
+                if (grafo.obtenerVertice(i).getLetra() == origen.getLetra())
+                {
+                    actual = grafo.generarCaminoBase(origen, grafo.obtenerVertice(i),pred);
+                    for (unsigned int i = 0; i < actual.size() - 1; ++i)
+                        costoActual += actual[i].calcularConexion(actual[i + 1].getLetra());
+                    if (costoActual > costo)
+                    {
+                        costo = costoActual;
+                        camino = actual;
+                    }
+                }
+            }
+            resp = "La base remota está ubicada en [" + to_string(camino.back().getX()) + "][" + to_string(camino.back().getY())+"]";
+            resp += " y la ruta entre la base en [" + to_string(origen.getX()) + "][" + to_string(origen.getY())+"]"+" y la base remota en ";
+            resp += " [" + to_string(camino.back().getX()) + "][" + to_string(camino.back().getY())+"]" + " es: ";
+            
+            for (int i = 0; i < camino.size(); i++)
+            {
+                resp += camino[i].getLetra();
+                if (i != camino.size() - 1)
+                    resp += ", ";
+            }
+            resp += " \nEl costo total es: " + to_string(costo) + "\n";
+        }
+    }
+    return resp;
 }

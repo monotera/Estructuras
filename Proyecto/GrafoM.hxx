@@ -6,7 +6,6 @@
 template <class T, class C>
 void GrafoM<T, C>::reiniciarGrafo()
 {
-    cout << "entro" << endl;
     this->vertices.clear();
     numVertices = 0;
     matAristas.clear();
@@ -533,26 +532,71 @@ vector<T> GrafoM<T, C>::generarCamino(T inicio, T destino)
     return camino;
 }
 template <class T, class C>
-vector<T> GrafoM<T, C>::obtenerVeci(T inicio)
+vector<T> GrafoM<T, C>::generarCaminoBase(T inicio, T destino,vector<T> pred)
+{
+    vector<T> camino;
+    bool encontrado = false;
+    ll final = buscarVertice(destino);
+    camino.clear();
+    int indice = final;
+    int ori = buscarVertice(inicio);
+    camino.push_back(obtenerVertice(indice));
+    while (indice != ori)
+    {
+        int aux = -1;
+
+        for (int j = 0; j < vertices.size() && !encontrado; j++)
+        {
+            if (indice == j)
+            {
+                encontrado = true;
+                aux = j;
+            }
+        }
+        indice = buscarVertice(pred[aux]);
+        camino.push_back(obtenerVertice(indice));
+        encontrado = false;
+    }
+    reverse(camino.begin(), camino.end());
+    return camino;
+}
+template <class T, class C>
+vector<T> GrafoM<T, C>::obtenerVeci(T inicio, int iden, int lineas)
 {
     vector<T> vecinos;
-    for (int i = 0; i < numVertices; i++)
+    vector<ll> v;
+    int x = inicio.getX();
+    int y = inicio.getY();
+    int indice = -1;
+    if (x + 1 < lineas)
     {
-        if (inicio.getX() - 1 == vertices[i].getX() && inicio.getY() == vertices[i].getY())
+        indice = ((x + 1) * iden) + y;
+        v.push_back(indice);
+    }
+    indice = -1;
+    if (x - 1 >= 0)
+    {
+        indice = ((x - 1) * iden) + y;
+        v.push_back(indice);
+    }
+    indice = -1;
+    if (y + 1 < iden)
+    {
+        indice = ((x)*iden) + (y + 1);
+        v.push_back(indice);
+    }
+    indice = -1;
+    if (y - 1 >= 0)
+    {
+        indice = ((x)*iden) + (y - 1);
+        v.push_back(indice);
+    }
+    indice = -1;
+    for (int i = 0; i < v.size(); i++)
+    {
+        if (v[i] < numVertices)
         {
-            vecinos.push_back(vertices[i]);
-        }
-        else if (inicio.getX() + 1 == vertices[i].getX() && inicio.getY() == vertices[i].getY())
-        {
-            vecinos.push_back(vertices[i]);
-        }
-        else if (inicio.getX() == vertices[i].getX() && inicio.getY() - 1 == vertices[i].getY())
-        {
-            vecinos.push_back(vertices[i]);
-        }
-        else if (inicio.getX() == vertices[i].getX() && inicio.getY() + 1 == vertices[i].getY())
-        {
-            vecinos.push_back(vertices[i]);
+            vecinos.push_back(obtenerVertice(v[i]));
         }
     }
     return vecinos;
@@ -567,4 +611,9 @@ int GrafoM<T, C>::buscarCordenadas(int x, int y)
             res = i;
     }
     return res;
+}
+template <class T, class C>
+C GrafoM<T, C>::obtenerCosto(unsigned long i, unsigned long j)
+{
+    return matAristas[i][j];
 }

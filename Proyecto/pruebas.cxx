@@ -8,8 +8,9 @@ int main(){
     char i;
     sistema sys;
     sys.cargarArchivo("prue.fa");
-    sys.generarGrafo("prueba");
-    sys.ruta_mas_corta("prueba", 0,0,1,2);
+    //sys.generarGrafo("24.6jsd12.Tut");
+    sys.ruta_mas_corta("Loach", 9,29,2,9);
+    sys.base_remota("Loach",1,0);
 
 
 

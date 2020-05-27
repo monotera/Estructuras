@@ -29,8 +29,10 @@ public:
     short llenarArreglos(char car[],long fre[]);
     vector<string> getNombreSec();
     vector<short> getIdentaciones();
+    short getIdentacionN(string nombre);
     secuencia buscarSec(string nombre);
     vector<NodoGrafo> generarVertices(string nombre); 
+    int cantiLineas(string nombe);
 };
 
 

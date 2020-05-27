@@ -31,10 +31,11 @@ public:
     struct datosBin;
     void llenarStruct(datosBin &datos);
     bool crearFa(datosBin dat);
-    bool generarGrafo(string nombre);
+    void generarGrafo(string nombre);
     bool llenarVertices(string nombre);
-    bool llenarConex();
-    int  ruta_mas_corta(string nombre, int i, int j, int x,int y);
+    bool llenarConex(string nombre);
+    string ruta_mas_corta(string nombre, int i, int j, int x,int y);
+    string base_remota(string nombre, int i, int j);
 };
 
 

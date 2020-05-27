@@ -137,6 +137,17 @@ vector<short> archivo::getIdentaciones()
     }
     return ide;
 }
+short archivo::getIdentacionN(string nombre)
+{
+    short ide = -1;
+    list<secuencia>::iterator it;
+    for (it = secuencias.begin(); it != secuencias.end() && ide == -1; it++)
+    {
+        if(it->getDescripcione() == nombre)
+            ide = (*it).getIndentacion();
+    }
+    return ide;
+}
 short archivo::llenarArreglos(char car[], long fre[])
 {
     list<secuencia>::iterator it = secuencias.begin();
@@ -279,7 +290,7 @@ short archivo::llenarArreglos(char car[], long fre[])
 secuencia archivo::buscarSec(string sec)
 {
     list<secuencia>::iterator it = secuencias.begin();
-    secuencia secu("F");
+    secuencia secu;
     for (; it != secuencias.end(); it++)
     {
         if ((*it).getDescripcione() == sec)
@@ -289,9 +300,10 @@ secuencia archivo::buscarSec(string sec)
     }
     return secu;
 }
-vector<NodoGrafo> archivo::generarVertices(string nombre){
+vector<NodoGrafo> archivo::generarVertices(string nombre)
+{
     secuencia sec = buscarSec(nombre);
-    list <string> lineas = sec.getLineas();
+    list<string> lineas = sec.getLineas();
     list<string>::iterator it = lineas.begin();
     vector<NodoGrafo> nodos;
     int x = 0;
@@ -300,11 +312,13 @@ vector<NodoGrafo> archivo::generarVertices(string nombre){
         string linea = *it;
         for (int y = 0; y < linea.size(); y++)
         {
-            NodoGrafo nodo(x,y,linea[y]);
+            NodoGrafo nodo(x, y, linea[y]);
             nodos.push_back(nodo);
-            
         }
-        x++;        
+        x++;
     }
     return nodos;
-} 
+}
+int archivo::cantiLineas(string nombre){
+    return buscarSec(nombre).getLineas().size();
+}
