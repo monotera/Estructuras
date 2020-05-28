@@ -367,6 +367,7 @@ bool sistema::llenarConex(string nombre)
 string sistema::ruta_mas_corta(string nombre, int i, int j, int x, int y)
 {
     string resp = "";
+    double costo = 0;
     generarGrafo(nombre);
     if (grafo.cantiVertices() != 0)
     {
@@ -384,9 +385,12 @@ string sistema::ruta_mas_corta(string nombre, int i, int j, int x, int y)
             for (int i = 0; i < camino.size(); i++)
             {
                 resp += camino[i].getLetra();
-                if (i != camino.size() - 1)
+                if (i != camino.size() - 1){
                     resp += ", ";
+                    costo+=camino[i].calcularConexion(camino[i+1].getLetra());
+                }
             }
+            resp += "\nEl costo total de la ruta es: " + to_string(costo);
             cout << endl;
         }
     }
@@ -436,7 +440,7 @@ string sistema::base_remota(string nombre, int i, int j)
                 if (i != camino.size() - 1)
                     resp += ", ";
             }
-            resp += " \nEl costo total es: " + to_string(costo) + "\n";
+            resp += " \nEl costo total es: " + to_string(costo);
         }
     }
     return resp;
