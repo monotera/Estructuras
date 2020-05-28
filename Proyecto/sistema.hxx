@@ -211,7 +211,6 @@ bool sistema::desCifrar(string nombreF)
             int cantiPal = 0;
             string secI = "";
             bool fin = false;
-            cout << datEx.longiSec[i] << endl;
             if (datEx.longiSec[i] >= 9999999 || datEx.longiSec[i] < 0)
             {
                 return false;
@@ -367,7 +366,6 @@ bool sistema::llenarConex(string nombre)
 string sistema::ruta_mas_corta(string nombre, int i, int j, int x, int y)
 {
     string resp = "";
-    double costo = 0;
     generarGrafo(nombre);
     if (grafo.cantiVertices() != 0)
     {
@@ -379,19 +377,19 @@ string sistema::ruta_mas_corta(string nombre, int i, int j, int x, int y)
             resp = "2";
         else
         {
+            double peso = 0.0;
             NodoGrafo origen = grafo.obtenerVertice(ori);
             NodoGrafo destino = grafo.obtenerVertice(des);
             vector<NodoGrafo> camino = grafo.generarCamino(origen, destino);
             for (int i = 0; i < camino.size(); i++)
             {
+                if(i < camino.size() - 1)
+                    peso += camino[i].calcularConexion(camino[i + 1].getLetra());
                 resp += camino[i].getLetra();
-                if (i != camino.size() - 1){
+                if (i != camino.size() - 1)
                     resp += ", ";
-                    costo+=camino[i].calcularConexion(camino[i+1].getLetra());
-                }
             }
-            resp += "\nEl costo total de la ruta es: " + to_string(costo);
-            cout << endl;
+            resp += "\nEl costo total de la ruta es: " + to_string(peso);
         }
     }
     return resp;
