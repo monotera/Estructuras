@@ -51,7 +51,7 @@ int secuencia::enmascarar(string sub){
     int util = 0;
     for(;it != linea.end();it++){
         if((*it).size()==ancho)
-            (*it)=temp.substr(util*ancho,ancho+1);
+            (*it)=temp.substr(util*ancho,ancho);
         else
             (*it)=temp.substr(util*ancho,(*it).size());        
         util++;

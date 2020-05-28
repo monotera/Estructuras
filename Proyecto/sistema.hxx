@@ -438,7 +438,7 @@ string sistema::base_remota(string nombre, int i, int j)
                 if (i != camino.size() - 1)
                     resp += ", ";
             }
-            resp += " \nEl costo total es: " + to_string(costo) + "\n";
+            resp += " \nEl costo total es: " + to_string(costo);
         }
     }
     return resp;
