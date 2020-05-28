@@ -245,33 +245,33 @@ int main(int argc, char *argv[])
             {
                 cout << "AYUDA \n";
                 cout << "Comandos disponibles: \n"
-                     << "cargar \t"
-                     << "conteo \t"
-                     << "listar_secuencia \t"
-                     << "histograma \n"
-                     << "es_subsecuencia \t"
-                     << "enmascarar \t"
-                     << "guardar \t"
-                     << "salir \n"
-                     << "codificar \t"
-                     << "decodificar \t"
-                     << "ruta_mas_corta \t"
-                     << "base_remota \n";
+                     << "-> cargar \n"
+                     << "-> conteo \n"
+                     << "-> listar_secuencia \n"
+                     << "-> histograma \n"
+                     << "-> es_subsecuencia \n"
+                     << "-> enmascarar \n"
+                     << "-> guardar \n"
+                     << "-> salir \n"
+                     << "-> codificar \n"
+                     << "-> decodificar \n"
+                     << "-> ruta_mas_corta \n"
+                     << "-> base_remota \n";
 
                 cout << "\nSe incluyen los comandos ayuda de cada comando, ayuda_nombre_del_comando \n";
 
-                cout << "ayuda cargar \t"
-                     << "ayuda conteo \t"
-                     << "ayuda listar_secuencia \t"
-                     << "ayuda histograma \n"
-                     << "ayuda es_subsecuencia \t"
-                     << "ayuda enmascarar \t"
-                     << "ayuda guardar \t"
-                     << "ayuda salir \n"
-                     << "ayuda codificar \t"
-                     << "ayuda decodificar \t"
-                     << "ayuda ruta_mas_corta\t"
-                     << "ayuda base_remota\n";
+                cout << "-> ayuda cargar \n"
+                     << "-> ayuda conteo \n"
+                     << "-> ayuda listar_secuencia \n"
+                     << "-> ayuda histograma \n"
+                     << "-> ayuda es_subsecuencia \n"
+                     << "-> ayuda enmascarar \n"
+                     << "-> ayuda guardar \n"
+                     << "-> ayuda salir \n"
+                     << "-> ayuda codificar \n"
+                     << "-> ayuda decodificar \n"
+                     << "-> ayuda ruta_mas_corta\n"
+                     << "-> ayuda base_remota\n";
             }
             else if (argc == 3)
             {
