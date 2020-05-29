@@ -1,2 +1,7 @@
-# STRUCTURES COURSE 2020-10 #
-IT IS FOCUSED MAINLY ON THE COURSE PROJECT, WHICH CAN BE READ ON THE FILE STATED (ENUNCIADO.PDF).
+# STRUCTURES COURSE 2020-10 
+
+* [Proyecto](https://github.com/monotera/Estructuras/tree/master/Proyecto)
+* [Taller2](https://github.com/monotera/Estructuras/tree/master/Taller-2)
+* [Taller3](https://github.com/monotera/Estructuras/tree/master/Taller3)
+* [Taller4](https://github.com/monotera/Estructuras/tree/master/Taller4)
+ 
